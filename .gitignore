@@ -27,6 +27,9 @@
 ### Liés à l'IDE
 .idea/
 
+### Liés à OS
+.DS_Store
+
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
