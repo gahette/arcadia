@@ -7,7 +7,7 @@
 
 ## <span style="color: green">Livrable attendu pour l'examen de ce bloc</span>
 
-### Toutes les compétences du titre professionnel développeur Web et Web Mobile seront analysées grâce à ce projet.
+### <span style="color: purple">Toutes les compétences du titre professionnel développeur Web et Web Mobile seront analysées grâce à ce projet.</span>
 
 #### Activité – Type 1 : Développer la partie front-end d'une application web ou web mobile sécurisée.
 
@@ -46,15 +46,15 @@ Après avoir été missionné par DevSoft pour travailler sur ce projet, José s
 
 ## <span style="color:green">Stack technique que j'ai choisi pour créer ce site</span>
 
-- Mockups : Figma
+- Mockups : Figma.
 - Front-end : React.js 18.3.1 avec javaScript.
 - Back-end : Symfony 7 avec  php 8.3.4
-- Css : tailwindcss
-- Base de donnée :  sur Supabase
+- Css : tailwindcss.
+- Base de donnée :  sur Supabase.
 - Timer : toggl track ( j' ai oublié souvent de l'actionner ou de le stopper donc le temps passé est surtout au mental :unamused: )
 - pour le déploiement : <font color='red'>a déinir (peut-être Vercel)</font>
 
-### Pour l'installation sur votre environnement en local
+### <span style="color: purple">Pour l'installation sur votre environnement en local</span>
 
 ```git clone https://github.com/gahette/arcadia.git```
 
@@ -100,10 +100,11 @@ lancer react avec :
 
 ## <span style="color:green">Étapes pour la mise en place du projet</span>
 
-- ### création d'un repository github
+- ### <span style="color: purple">création d'un repository github.</span>
 
-- ### installation de symfony 7
-en suivant essentiellement la doc de [Symfony](https://www.symfony.com)
+- ### <span style="color: purple">installation de symfony 7.</span>
+
+en suivant essentiellement la doc de [Symfony](https://www.symfony.com).
 
 ```symfony new arcadia --version="7.1.*" --webapp```
 
@@ -113,41 +114,213 @@ composer install
 composer update
 ```
 
-**Même si beaucoup de dépendances sont déjà installés avec --webapp**
+**Même si beaucoup de dépendances sont déjà installés avec --webapp.**
 
 ```composer require --dev debug``` (pour utiliser dd et dump)
 
 
-Installation de l'ORM Doctrine
+Installation de l'ORM Doctrine.
 ```
 composer require symfony/orm-pack
 composer require --dev symfony/maker-bundle
 ```
 
-Installation de twig
+Installation de twig.
 
 ```composer require twig```
 
-Installation de [php-cs-fixer](https://cs.symfony.com/doc/installation.html) pour vérifier les standards et l'uniformisation du code
+Installation de [php-cs-fixer](https://cs.symfony.com/doc/installation.html) pour vérifier les standards et l'uniformisation du code.
 
 ```composer require friendsofphp/php-cs-fixer --dev```
 
-Installation de [phpStan](https://phpstan.org/) pour faire une analyse statique du code, cherche les incohérences, avec les [extensions](https://phpstan.org/user-guide/extension-library) de Doctrine, PHPUnit et Symfony
+Installation de [phpStan](https://phpstan.org/) pour faire une analyse statique du code, cherche les incohérences, avec les [extensions](https://phpstan.org/user-guide/extension-library) de Doctrine, PHPUnit et Symfony.
 
 ``` composer require --dev phpstan/phpstan phpstan/extension-installer phpstan/phpstan-symfony phpstan/phpstan-phpunit phpstan/phpstan-doctrine```
 
+j'ai paramétré phpStan avec le fichier phpstan.dist.neon en mettant le level à 9 et donnant les chemins des dossiers src et tests.
+
 >Configuration dans composer.json, dans script ajouter
-> 
-> "fix": "php-cs-fixer fix",
-> 
->"check": [
-"phpstan",
-"php-cs-fixer fix --dry-run --diff"
-]
+
+```angular2html
+  "fix": "php-cs-fixer fix",
+    "check": [
+      "phpstan",
+      "php-cs-fixer fix --dry-run --diff"
+    ]
+  },
+```
+
+- ### <span style="color: purple">installation de tailwindcss.</span>
+
+Pour utiliser tailwindcss dans Symfony, il faut installer webpack encore.
+
+j'ai decidé de supprimer tout les fichiers en rappport avec importmap (importmap.php, les liens dans le head, ... ) pour ne pas avoir de conflit avec webpack encore lorsque je vais installer Symfony/ux-react.
+Et en même temps supprimer aussi tout les fichiers, dossiers en rapport avec docker que je n'utilise pas sur ce projet.
+
+```composer require symfony/webpack-encore-bundle```
+
+```
+npm install -D tailwindcss postcss postcss-loader autoprefixer
+npx tailwindcss init -p
+```
+
+ajouter dans le fichier webpack.config.js 
+
+> .enablePostCssLoader();
+
+Dans le fichier tailwind.config.js 
+
+```angular2html
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./assets/**/*.js",
+    "./assets/**/*.jsx",
+    "./templates/**/*.html.twig",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+Dans le app.css dans le dossier assets/styles/
+
+```
+@tailwind base;
+@tailwind components; 
+@tailwind utilities;
+```
+
+relancer la commande 
+
+```npm run watch```
+
+et s'assurer que dans "base.html.twig" que le css compile.
+
+ajouter dans {% block stylesheets %} si ce n'est pas mis
+
+> {{ encore_entry_link_tags('app') }}
+
+- ### <span style="color: purple">installation de React dans Symfony.</span>
+
+Pour installer React
+
+```composer require symfony/ux-react```
+
+ensuite 
+
+```npm install -D @babel/preset-react --force```
+
+dans le fichier webpack.config.js décommenter 
+
+> .enableReactPreset()
+
+vérifier que le fichier app.js dans le dossier assets ressemble à 
+
+```angular2html
+import { registerReactControllerComponents } from '@symfony/ux-react';
+import './bootstrap.js';
+import './styles/app.css';
+
+console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+
+registerReactControllerComponents(require.context('./react/controllers', true, /\.(j|t)sx?$/));
+```
+
+et que dans "base.html.twig" il y a dans le block javaScript
+
+> {{ encore_entry_script_tags('app') }}
 
 
+vérifier que le fichier controllers.json dans dossier assets ressemble à 
+
+```angular2html
+{
+    "controllers": {
+        "@symfony/ux-react": {
+            "react": {
+                "enabled": true,
+                "fetch": "eager"
+            }
+        },
+    },
+    "entrypoints": []
+}
+```
 
 
+J'ai aussi installer StimulusBundle mais pas sur qu'il soit utilisé
+
+```composer require symfony/stimulus-bundle```
+
+un fichiers hello_controller.js dans un dossier assets/controllers a été créé.
+
+le fichier boottstrap.js dans le dossier assets doit ressembler à 
+
+```
+import {startStimulusApp} from '@symfony/stimulus-bridge';
+
+// Registers Stimulus controllers from controllers.json and in the controllers/ directory
+export const app = startStimulusApp(require.context(
+'@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
+true,
+/\.[jt]sx?$/
+));
+```
+
+et ajouter dans le fichier webpack.config.js
+
+> .enableStimulusBridge('./assets/controllers.json')
+
+relancer les commande 
+
+```
+npm install
+npm run watch
+```
+
+## <span style="color:green">Vérification de l'installation de symfony et de React dans Symfony</span>
+
+Création d'un controller HomeController.php dans le dossier src/Controller avec la commande : 
+
+```php bin/console make: controller HomeController```
+
+un fichier index.html.twig dans un dossier templates/home est créé que j'ai modifié comme suit :
+
+```angular2html
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+<div {{ react_component('Home') }}></div>
+{% endblock %}
+```
+
+Ensuite j'ai créé un fichier Home.jsx dans un dossier assets/react/controllers :
+
+```angular2html
+import React from 'react';
+
+export default function Home() {
+    return (
+        <>
+            <div className="text-5xl text-center text-yellow-200">
+                Test
+            </div>
+        </>
+
+    )
+}
+```
+
+j'obtiens :
+
+![capture test](/docs/Capture-test.png)
+
+### Super on peut attaquer le code !!!
 
 
 
