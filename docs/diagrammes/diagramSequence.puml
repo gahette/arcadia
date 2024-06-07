@@ -1,0 +1,65 @@
+@startuml
+!theme cerulean-outline
+skinparam backgroundColor #FFFFFF
+
+title "Processus nouveau visiteur"
+
+actor Visitor as "Visiteur"
+participant Site as "Page d'accueil"
+participant Services as "Les services"
+participant Habitats as "Les habitats"
+participant Animaux as "Les animaux"
+participant About as "A propos"
+participant Contact as "Contact"
+participant Connexion as "Connexion"
+participant Zoo as "Zoo"
+participant Selection as "Selection"
+
+Visiteur -> Site : Arrive sur la page d'accueil
+
+Visiteur -> Site : Navigue vers la liste des services
+Site -> Services : Arrive sur la page des services
+Visiteur -> Selection : Sélectionne un service
+Selection -> Services : Valide la sélection
+Visiteur -> Services : Consulte un service
+
+Visiteur -> Site : Retourne à la page d'accueil
+
+Visiteur -> Site : Navigue vers la liste des habitats
+Site -> Habitats : Arrive sur la page des habitats
+Visiteur -> Selection : Sélectionne un habitat
+Selection -> Habitats : Valide la sélection
+Visiteur -> Habitats : Consulte un habitat
+Habitats -> Animaux : Liste les animaux par habitat
+Visiteur -> Selection : Sélectionne un animal
+Selection -> Animaux : Consulte un animal
+
+Visiteur -> Site : Retourne à la page d'accueil
+
+Visiteur -> Site : Navigue vers la liste des animaux
+Site -> Animaux : Arrive sur la page des animaux
+Visiteur -> Selection : Sélectionne un animal
+Selection -> Animaux : Valide la sélection
+Visiteur -> Animaux : Consulte un animal
+
+Visiteur -> Site : Retourne à la page d'accueil
+
+Visiteur -> Site : Consulte la page A propos
+Site -> About : Affiche la page A propos
+
+Visiteur -> Site : Retourne à la page d'accueil
+
+Visiteur -> Contact : Navigue vers la page de contact
+Visiteur -> Contact : Remplit le formulaire de contact
+Contact -> Zoo : Envoie les détails du formulaire
+Zoo -> Contact : Traite la demande
+Zoo -> Visiteur : Contacte pour plus d'informations
+
+Visiteur -> Connexion : Navigue vers la page de connexion
+Connexion -> Visiteur : Affiche la page de connexion
+Visiteur -> Connexion : Entre les identifiants (vétérinaire, employé, administrateur)
+Connexion -> Zoo : Envoie les identifiants
+Zoo -> Connexion : Valide les identifiants
+Connexion -> Visiteur : Affiche le résultat de la connexion
+
+@enduml

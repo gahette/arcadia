@@ -1,0 +1,113 @@
+@startuml
+!theme cerulean-outline
+skinparam backgroundColor #FFFFFF
+
+class Users {
+    +id: int
+    +lastname: string
+    +firstname: string
+    +username: string
+    +password: string
+    +role: UserRole
+    +created_at: datetime
+    +updated_at: datetime
+    +authenticate(email: string, password: string): bool
+}
+
+enum UserRole {
+    ADMIN
+    EMPLOYEE
+    VET
+    VISITOR
+}
+
+class Services {
+    +id: int
+    +name: string
+    +description: string
+    +created_at: datetime
+    +updated_at: datetime
+}
+
+class OpeningHours {
+    +id: int
+    +day: string
+    +opening_time: string
+    +closing_time: string
+}
+
+class Habitats {
+    +id: int
+    +description: string
+    +state: string
+    +comment: string
+    +created_at: datetime
+    +updated_at: datetime
+}
+
+class Animals {
+    +id: int
+    +nickname: string
+    +classification: string
+    +area: string
+    +description: string
+    +consultation_count: int
+    +created_at: datetime
+    +updated_at: datetime
+}
+
+class Testimonials {
+    +id: int
+    +pseudo: string
+    +content: string
+    +is_visible: bool
+    +created_at: datetime
+    +updated_at: datetime
+}
+
+class Images {
+    +id: int
+    +path: string
+    +size: int
+    +created_at: datetime
+    +updated_at: datetime
+}
+
+class VetReports {
+    +id: int
+    +animal_id: int
+    +content: text
+    +created_at: datetime
+    +updated_at: datetime
+}
+
+class FoodConsumption {
+    +id: int
+    +animal_id: int
+    +food: string
+    +quantity: int
+    +consumption_date: datetime
+    +created_at: datetime
+    +updated_at: datetime
+}
+
+Users "1" -|> UserRole : a_role
+Habitats "1" -- "0..*" Animals : > possede
+Users "1" -- "0..*" VetReports : > redige
+Animals "1" -- "0..*" VetReports : > detient
+Habitats "1" -- "0..*" Images : > possede
+Animals "1" - "0..*" Images : > possede
+Users "1" -- "0..*" Images : > possede
+Users "1" -- "0..*" Services : > gere
+Users "1" -- "0..*" OpeningHours : > gere
+Users "1" -- "0..*" Habitats : > gere
+Users "1" -- "0..*" Animals : > gere
+Users "1" -- "0..*" Testimonials : > valider_invalider
+Animals "1" -- "0..*" FoodConsumption : > consomme
+Users "1" -- "0..*" FoodConsumption : > enregistrer
+Users "1" -- "0..*" Habitats : > commenter
+
+@enduml
+
+
+

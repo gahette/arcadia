@@ -1,0 +1,82 @@
+@startuml
+!theme cerulean-outline
+skinparam backgroundColor #FFFFFF
+left to right direction
+
+rectangle ZooSystem {
+actor Visitor as "Visiteur"
+package Staff {
+actor Admin as "Administrateur"
+actor Employee as "Employé"
+actor Vet as "Vétérinaire"
+}
+
+  usecase "Accéde à la page d'accueil" as UC1
+  usecase "Voit la liste des services" as UC3
+  usecase "Consulte un service" as UC4
+  usecase "Voit la liste des habitats" as UC5
+  usecase "Consulte un habitat" as UC6
+  usecase "Voit la liste des animaux" as UC7
+  usecase "Consulte un animal" as UC8
+  usecase "Consulte la page "À propos"" as UC9
+  usecase "Rempli le formulaire de contact" as UC10
+  usecase "Se connecte" as UC11
+  usecase "voit la liste des animaux par habitats" as UC17
+  usecase "ajoute un témoignage" as UC22
+  usecase "Créé un compte employé ou vétérinaire" as UC12
+  usecase "Modifie les horaires" as UC13
+  usecase "Modifie les services" as UC14
+  usecase "Modifie les habitats" as UC15
+  usecase "Modifie les animaux" as UC16
+  usecase "note la date, l'heure et la quantité donné aux animaux" as UC18
+  usecase "modère les témoignages" as UC23
+  usecase "Rempli compte rendu par animaux" as UC19
+  usecase "Commente sur les habitats" as UC20
+  usecase "peut voir la consommation des animaux" as UC21
+  usecase "Consulte un animal d'un habitat" as UC2
+
+Visitor --> UC1
+Visitor --> UC3
+Visitor --> UC4
+Visitor --> UC5
+Visitor --> UC6
+Visitor --> UC7
+Visitor --> UC8
+Visitor --> UC9
+Visitor --> UC10
+Visitor --> UC22
+Visitor --> UC17
+Visitor --> UC2
+
+Admin --> UC12
+Admin --> UC13
+Admin --> UC14
+Admin --> UC15
+Admin --> UC16
+
+Employee --> UC18
+Employee --> UC23
+
+Vet --> UC19
+Vet --> UC20
+Vet --> UC21
+
+UC22 ..> UC23 : <<extend>>
+UC21 ..> UC18 : <<extend>>
+UC12 ..> UC11 : <<include>>
+UC13 ..> UC11 : <<include>>
+UC14 ..> UC11 : <<include>>
+UC15 ..> UC11 : <<include>>
+UC16 ..> UC11 : <<include>>
+UC23 ..> UC11 : <<include>>
+UC19 ..> UC11 : <<include>>
+UC20 ..> UC11 : <<include>>
+UC18 ..> UC11 : <<include>>
+UC21 ..> UC11 : <<include>>
+UC5 ..> UC17 : <<extend>>
+UC17 ..> UC2 : <<extend>>
+
+
+}
+
+@enduml

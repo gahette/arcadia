@@ -320,6 +320,19 @@ j'obtiens :
 
 ![capture test](/docs/Capture-test.png)
 
+## <span style="color:green">Diagramme de séquence</span>
+
+![diagramme_sequence](/docs/diagrammes/diagramSequence.svg)
+
+## <span style="color:green">Diagramme de cas d'utilisation</span>
+
+![diagramme_d'utilisation](/docs/diagrammes/diagramUseCase.svg)
+
+## <span style="color:green">Diagramme de classe</span>
+
+![diagramme_classe](/docs/diagrammes/diagramClass.svg)
+
+
 ### Super on peut attaquer le code !!!
 
 
