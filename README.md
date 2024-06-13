@@ -332,11 +332,128 @@ j'obtiens :
 
 ![diagramme_classe](/docs/diagrammes/diagramClass.svg)
 
+## <span style="color:green">Création de la base de données et ses tables.</span>
 
-### Super on peut attaquer le code !!!
+- ### <span style="color: purple">Création d'utilisateur et mot de passe mysql en local avec tout les droits pour ce projet</span>
 
+Dans un terminal : 
 
+```angular2html
+mysql -u root -p  
+```
+mettre votre mot de passe si vous en avez un.
 
+ensuite tapez : 
 
+```angular2html
+CREATE USER 'nom_user_choisi'@'%' IDENTIFIED BY 'mot_de_passe_choisi';
+```
+il faut donnée les droits a votre nouvel utilisateur :
+
+```angular2html
+GRANT ALL PRIVILEGES ON nom_base.* TO 'nom_user_choisi'@'%';
+```
+
+```angular2html
+FLUSH PRIVILEGES;
+```
+
+Vérifier :
+
+```angular2html
+SHOW GRANTS FOR 'nom_user_choisi'@'%';
+```
+
+Voici le resultat obtenu :
+
+```angular2html
++---------------------------------------------------------------+
+| Grants for nom_user_choisi@%                                  |
++---------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `nom_user_choisi`@`%`                   |
+| GRANT ALL PRIVILEGES ON `nom_base`.* TO `nom_user_choisi`@`%` |
++---------------------------------------------------------------+
+```
+
+- ### <span style="color: purple">Création de la base de données avec Symfony</span>
+
+#### Paramétrage de Symfony
+
+J'ai commencé par créer un fichier .env.local à la racine du projet pour suivre la recommandation commenter dans .env 
+
+```angular2html
+# DO NOT DEFINE PRODUCTION SECRETS IN THIS FILE NOR IN ANY OTHER COMMITTED FILES.
+```
+et ainsi éviter que mes identifiant et mot de passe de la base de données soit commité.
+
+Ensuite dans j'ai commenté dans .env 
+
+```angular2html
+# DATABASE_URL="postgresql://app:!ChangeMe!@127.0.0.1:5432/app?serverVersion=16&charset=utf8"
+```
+et décommenté 
+```angular2html
+DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8.0.32&charset=utf8mb4"
+```
+j'ai copié et collé ce dernier dans .env.local et remplacé les infos de connection à la base comme suit :
+
+```angular2html
+DATABASE_URL="mysql://nom_user_choisi:mot_de_passe_choisi@127.0.0.1:3306/nom_base?serverVersion=8.0.32&charset=utf8mb4"
+```
+
+#### Après avoir paramétré les fichiers .env, création de la base de donnée avec doctrine
+
+Dans le terminal je créé la base avec la commande :
+
+```angular2html
+php bin/console doctrine:database:create
+```
+j'ai vérifié que la base a bien été créé en me connectant a mysql avec mes nouveaux identifiants et en lançant la commande :
+
+```angular2html
+SHOW DATABASES;
+```
+Ça fonctionne 
+
+```angular2html
++--------------------+
+| Database           |
++--------------------+
+| nom_base           |
+| information_schema |
+| performance_schema |
++--------------------+
+
+```
+
+#### Retour sur l'IDE pour créer les entités
+
+L'entité User avec ```php bin/console make:user```,
+
+mise en place de Trait pour regrouper les champs communs pour chaque entités et installation de StofDoctrineExtensionsBundle  avec ```composer require stof/doctrine-extensions-bundle``` pour gérer les createdAt, updatedAt et slug.
+
+J'ai active bundle dans config/packages/stof_doctrine_extensions.yaml :
+
+```angular2html
+stof_doctrine_extensions:
+    default_locale: fr_FR
+    orm:
+        default:
+            timestampable: true # not needed: listeners are not enabled by default
+            sluggable: true
+            sortable: true
+```
+
+Les autres entités ```php bin/console make:entity```.
+
+- ### <span style="color: purple">Création des tables dans la base de données</span>
+
+#### Génération des entités avec ```php bin/console make:migrations```
+
+j'ai eu un souci de compatibilité entre StofDoctrineExtensionsBundle et doctrine/orm, pour le régler j'ai downgradé doctrine/orm de "^3.2" vers "^2.19.5" (ne pas oublier de faire un ```composer update```).
+
+#### Execution des migrations ```php bin/console doctrine:migrations:migrate```
+
+Voilà la base de données s'est remplie de ses tables...
 
 
