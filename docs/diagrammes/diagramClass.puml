@@ -2,11 +2,11 @@
 !theme cerulean-outline
 skinparam backgroundColor #FFFFFF
 
-class Users {
+class User {
     +id: int
     +lastname: string
     +firstname: string
-    +username: string
+    +email: string
     +password: string
     +role: UserRole
     +created_at: datetime
@@ -21,42 +21,47 @@ enum UserRole {
     VISITOR
 }
 
-class Services {
+class Service {
     +id: int
     +name: string
-    +description: string
+    +slug: string
+    +description: text
     +created_at: datetime
     +updated_at: datetime
 }
 
-class OpeningHours {
+class OpeningHour {
     +id: int
     +day: string
     +opening_time: string
     +closing_time: string
 }
 
-class Habitats {
+class Habitat {
     +id: int
-    +description: string
+    +name: string
+    +slug: string
+    +description: text
     +state: string
-    +comment: string
+    +comment: text
     +created_at: datetime
     +updated_at: datetime
 }
 
-class Animals {
+class Animal {
     +id: int
+    +name: string
+    +slug: string
     +nickname: string
     +classification: string
     +area: string
-    +description: string
+    +description: text
     +consultation_count: int
     +created_at: datetime
     +updated_at: datetime
 }
 
-class Testimonials {
+class Testimonial {
     +id: int
     +pseudo: string
     +content: string
@@ -65,17 +70,20 @@ class Testimonials {
     +updated_at: datetime
 }
 
-class Images {
+class Image {
     +id: int
+    +name: string
+    +slug: string
+    +description: string
+    +priority: int
     +path: string
-    +size: int
+    +size: float
     +created_at: datetime
     +updated_at: datetime
 }
 
-class VetReports {
+class VetReport {
     +id: int
-    +animal_id: int
     +content: text
     +created_at: datetime
     +updated_at: datetime
@@ -83,31 +91,26 @@ class VetReports {
 
 class FoodConsumption {
     +id: int
-    +animal_id: int
     +food: string
     +quantity: int
-    +consumption_date: datetime
     +created_at: datetime
     +updated_at: datetime
 }
 
-Users "1" -|> UserRole : a_role
-Habitats "1" -- "0..*" Animals : > possede
-Users "1" -- "0..*" VetReports : > redige
-Animals "1" -- "0..*" VetReports : > detient
-Habitats "1" -- "0..*" Images : > possede
-Animals "1" - "0..*" Images : > possede
-Users "1" -- "0..*" Images : > possede
-Users "1" -- "0..*" Services : > gere
-Users "1" -- "0..*" OpeningHours : > gere
-Users "1" -- "0..*" Habitats : > gere
-Users "1" -- "0..*" Animals : > gere
-Users "1" -- "0..*" Testimonials : > valider_invalider
-Animals "1" -- "0..*" FoodConsumption : > consomme
-Users "1" -- "0..*" FoodConsumption : > enregistrer
-Users "1" -- "0..*" Habitats : > commenter
+User "1" -|> UserRole : a_role
+Habitat "1" -- "0..*" Animal : > possede
+User "1" -- "0..*" VetReport : > redige
+Animal "1" -- "0..*" VetReport : > detient
+Habitat "1" -- "0..*" Image : > possede
+Animal "1" - "0..*" Image : > possede
+User "1" -- "0..*" Image : > possede
+User "1" -- "0..*" Service : > gere
+User "1" -- "0..*" OpeningHour : > gere
+User "1" -- "0..*" Habitat : > gere
+User "1" -- "0..*" Animal : > gere
+User "1" -- "0..*" Testimonial : > valider_invalider
+Animal "1" -- "0..*" FoodConsumption : > consomme
+User "1" -- "0..*" FoodConsumption : > enregistrer
+User "1" -- "0..*" Habitat : > commenter
 
 @enduml
-
-
-
