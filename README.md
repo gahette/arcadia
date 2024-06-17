@@ -570,3 +570,108 @@ create table vet_report
     foreign key (animal_id) references animal (id)
 );
 ```
+
+- ### <span style="color: purple">Gestion des fichiers images</span>
+
+#### mise en place VichUploader pour gérer les fichiers ici les images
+
+j'ai commencé par charger le bundle Symfony:
+
+```composer require vich/uploader-bundle```
+
+et j'ai paramétré le config/packages/vich_uploader.yaml nouvellement installé comme suit:
+
+```angular2html
+vich_uploader:
+    db_driver: orm
+
+    metadata:
+        type: attribute
+
+    mappings:
+        images:
+            uri_prefix: /images
+            upload_destination: '%kernel.project_dir%/public/images'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+```
+En suivant la documentation de VichUploaderBundle, j'ai ajouté dans l'entité Image:
+
+```angular2html
+  // NOTE: This is not a mapped field of entity metadata, just a simple property.
+    #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'path', size: 'size')]
+    private ?File $file = null;
+
+    public function getFile(): ?File
+    {
+    return $this->file;
+    }
+
+    /**
+    * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+    * of 'UploadedFile' is injected into this setter to trigger the update. If this
+    * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+    * must be able to accept an instance of 'File' as the bundle will inject one here
+    * during Doctrine hydration.
+    */
+    public function setFile(File|UploadedFile|null $file): void
+    {
+    $this->file = $file;
+
+    if (null !== $file) {
+    // It is required that at least one field changes if you are using doctrine
+    // otherwise the event listeners won't be called and the file is lost
+    $this->updatedAt = new \DateTimeImmutable();
+    }
+    }
+```
+
+comme dans la documentation utilise int au lieu de float pour le size, j'ai modifié cette attribut dans mon entité Image,
+et refait une migration pour que ce soit pris en compte dans la bdd.
+
+ensuite j'ai créé un dossier Namer pour que les images chargées soit placées dans des sous-dossiers :
+
+```angular2html
+<?php
+
+namespace App\Namer;
+
+use App\Entity\Image;
+use Vich\UploaderBundle\Mapping\PropertyMapping;
+use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
+
+class ImageDirectoryNamer implements DirectoryNamerInterface
+{
+    /**
+     * @param Image $object
+     *
+     * @throws \Exception
+     */
+    public function directoryName($object, PropertyMapping $mapping): string
+    {
+        $habitat = $object->getHabitat();
+        $animal = $object->getAnimal();
+        if (!is_null($animal)) {
+            $habitat = $animal->getHabitat();
+        }
+
+        if (is_null($habitat)) {
+            throw new \Exception('Habitat and Animal MUST not be empty in images');
+        }
+
+        $directoryName = $habitat->getSlug();
+
+        if (!is_null($animal)) {
+            $directoryName .= '/'.$animal->getId();
+        }
+
+        return $directoryName;
+    }
+}
+```
+
+et ajouté dans le mappings de config/packages/vich_uploader.yaml
+
+```angular2html
+            directory_namer:
+                service: App\Namer\ImageDirectoryNamer
+```
