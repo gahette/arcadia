@@ -52,7 +52,7 @@ create table image
     user_id     int                            not null,
     priority    int                            null,
     path        varchar(128)                   not null,
-    size        double                         not null,
+    size        int                         not null,
     foreign key (animal_id) references animal (id),
     foreign key (habitat_id) references habitat (id),
     foreign key (user_id) references user (id)
@@ -105,5 +105,5 @@ create table vet_report
     foreign key (animal_id) references animal (id)
 );
 
-
+-- todo : ne pas oublier de modifier le pdf
 
