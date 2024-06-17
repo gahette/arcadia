@@ -77,7 +77,7 @@ class Image {
     +description: string
     +priority: int
     +path: string
-    +size: float
+    +size: int
     +created_at: datetime
     +updated_at: datetime
 }

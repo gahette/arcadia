@@ -39,9 +39,15 @@
 phpstan.neon
 ###< phpstan/phpstan ###
 
+### Images
+public/images/*
+!public/images/.gitignore
+
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+
