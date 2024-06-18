@@ -33,3 +33,8 @@ db.drop:
 db.create:
 	php bin/console doctrine:database:create
 
+admin.crud:
+	php bin/console make:admin:crud
+
+
+

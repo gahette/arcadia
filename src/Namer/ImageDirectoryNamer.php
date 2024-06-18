@@ -6,6 +6,9 @@ use App\Entity\Image;
 use Vich\UploaderBundle\Mapping\PropertyMapping;
 use Vich\UploaderBundle\Naming\DirectoryNamerInterface;
 
+/**
+ * @implements DirectoryNamerInterface<Image>
+ */
 class ImageDirectoryNamer implements DirectoryNamerInterface
 {
     /**
@@ -31,6 +34,6 @@ class ImageDirectoryNamer implements DirectoryNamerInterface
             $directoryName .= '/'.$animal->getId();
         }
 
-        return $directoryName;
+        return (string) $directoryName;
     }
 }

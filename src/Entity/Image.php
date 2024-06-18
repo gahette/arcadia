@@ -70,12 +70,12 @@ class Image
         return $this;
     }
 
-    public function getSize(): ?float
+    public function getSize(): ?int
     {
         return $this->size;
     }
 
-    public function setSize(float $size): static
+    public function setSize(int $size): static
     {
         $this->size = $size;
 
@@ -137,7 +137,7 @@ class Image
         if (null !== $file) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->updatedAt = new \DateTime();
         }
     }
 }

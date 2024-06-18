@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Entity\Traits;
+
 use Doctrine\ORM\Mapping as ORM;
+
 trait HasIdTrait
 {
     #[ORM\Id]

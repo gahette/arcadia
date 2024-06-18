@@ -51,7 +51,7 @@ class Testimonial
         return $this->is_visible;
     }
 
-    public function setVisible(bool $is_visible): static
+    public function setIsVisible(bool $is_visible): static
     {
         $this->is_visible = $is_visible;
 

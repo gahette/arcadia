@@ -20,7 +20,6 @@ class Habitat
     use HasDescriptionTrait;
     use TimestampableEntity;
 
-
     #[ORM\Column(length: 128, nullable: true)]
     private ?string $state = null;
 
@@ -44,7 +43,6 @@ class Habitat
         $this->animals = new ArrayCollection();
         $this->images = new ArrayCollection();
     }
-
 
     public function getState(): ?string
     {
@@ -128,5 +126,10 @@ class Habitat
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName().' ('.$this->getId().')';
     }
 }

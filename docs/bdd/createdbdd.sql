@@ -102,6 +102,8 @@ create table vet_report
     id        int auto_increment primary key not null,
     animal_id int                            not null,
     content   longtext                       null,
+    created_at datetime                       not null,
+    updated_at datetime                       not null,
     foreign key (animal_id) references animal (id)
 );
 

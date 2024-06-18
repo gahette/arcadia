@@ -675,3 +675,5 @@ et ajouté dans le mappings de config/packages/vich_uploader.yaml
             directory_namer:
                 service: App\Namer\ImageDirectoryNamer
 ```
+
+[//]: # todo sql avec image

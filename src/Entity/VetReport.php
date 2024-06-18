@@ -2,17 +2,17 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\HasIdTrait;
 use App\Repository\VetReportRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: VetReportRepository::class)]
 class VetReport
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use HasIdTrait;
+    use TimestampableEntity;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
@@ -20,11 +20,6 @@ class VetReport
     #[ORM\ManyToOne(inversedBy: 'vetReports')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getContent(): ?string
     {
@@ -48,5 +43,10 @@ class VetReport
         $this->animal = $animal;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getContent().' ('.$this->getId().')';
     }
 }
