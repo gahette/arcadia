@@ -42,6 +42,7 @@ class AnimalCrudController extends AbstractCrudController
                 return $action->setLabel('Créer un nouvel animal');
             });
     }
+
     public function configureFields(string $pageName): iterable
     {
         $vetReportsField = CollectionField::new('vetReports', 'Rapport du vétérinaire')->onlyOnForms();
@@ -66,7 +67,7 @@ class AnimalCrudController extends AbstractCrudController
                             $report->getContent(),
                             $report->getFood(),
                             $report->getQuantity().' grammes',
-                            $date
+                            $report->getCreatedAt()->format('d-m-Y H:i:s'),
                         );
                     }, $sortedReports));
                 })->onlyOnIndex();
@@ -89,7 +90,6 @@ class AnimalCrudController extends AbstractCrudController
                             $report->getHabitat(),
                             $report->getAnimal(),
                             $report->getCreatedAt()->format('d-m-Y H:i:s'),
-                            $date
                         );
                     }, $sortedReports));
                 })->onlyOnIndex();

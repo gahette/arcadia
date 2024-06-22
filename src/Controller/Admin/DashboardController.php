@@ -46,7 +46,6 @@ class DashboardController extends AbstractDashboardController
         return Dashboard::new()
             ->renderContentMaximized()
             ->setTitle('Arcadia');
-
     }
 
     public function configureCrud(): Crud
@@ -65,7 +64,6 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Données');
 
-
         yield MenuItem::linkToCrud('Services', 'fas fa-bell-concierge', Service::class);
         yield MenuItem::linkToCrud('Habitats', 'fas fa-tents', Habitat::class);
         yield MenuItem::linkToCrud('Animaux', 'fas fa-paw', Animal::class);
@@ -75,7 +73,6 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::linkToCrud('Rapports vétérinaire', 'fas fa-file-medical', VetReport::class);
         yield MenuItem::linkToCrud('Consommation alimentaire', 'fas fa-bowl-food', FoodConsumption::class);
-
 
         yield MenuItem::linkToCrud('Images', 'fas fa-images', Image::class);
 

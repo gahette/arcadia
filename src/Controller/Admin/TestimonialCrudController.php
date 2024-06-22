@@ -33,7 +33,6 @@ class TestimonialCrudController extends AbstractCrudController
             BooleanField::new('isVisible')->setLabel('Activé/Désactivé'),
             DateTimeField::new('createdAt')->hideOnForm(),
             DateTimeField::new('updatedAt')->hideOnForm(),
-
         ];
     }
 }

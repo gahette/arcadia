@@ -38,6 +38,7 @@ class VetReportCrudController extends AbstractCrudController
                 return $action->setLabel('Créer un nouveau rapport');
             });
     }
+
     public function configureFields(string $pageName): iterable
     {
         return [

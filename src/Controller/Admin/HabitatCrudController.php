@@ -38,6 +38,7 @@ class HabitatCrudController extends AbstractCrudController
                 return $action->setLabel('Créer un nouvel animal');
             });
     }
+
     public function configureFields(string $pageName): iterable
     {
         $animalsField = CollectionField::new('animals', 'Liste des animaux')->onlyOnForms();
@@ -59,7 +60,7 @@ class HabitatCrudController extends AbstractCrudController
                             $report->getName(),
                             $report->getId(),
                             $report->getCreatedAt()->format('d-m-Y H:i:s'),
-                            $date
+                            $report->getCreatedAt()->format('d-m-Y H:i:s'),
                         );
                     }, $sortedReports));
                 })->onlyOnIndex();
@@ -86,7 +87,6 @@ class HabitatCrudController extends AbstractCrudController
                             $report->getHabitat(),
                             $report->getAnimal(),
                             $report->getCreatedAt()->format('d-m-Y H:i:s'),
-                            $date
                         );
                     }, $sortedReports));
                 })->onlyOnIndex();

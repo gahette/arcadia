@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Entity\Traits\HasIdTrait;
 use App\Repository\FoodConsumptionRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\Timestampable;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: FoodConsumptionRepository::class)]
@@ -59,8 +58,9 @@ class FoodConsumption
 
         return $this;
     }
+
     public function __toString(): string
     {
-        return $this->getFood();
+        return (string) $this->getFood();
     }
 }
