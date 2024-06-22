@@ -32,25 +32,25 @@ class Animal
     private ?int $consultation_count = null;
 
     #[ORM\ManyToOne(inversedBy: 'animals')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Habitat $habitat = null;
 
     /**
      * @var Collection<int, VetReport>
      */
-    #[ORM\OneToMany(mappedBy: 'animal', targetEntity: VetReport::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'animal', targetEntity: VetReport::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $vetReports;
 
     /**
      * @var Collection<int, FoodConsumption>
      */
-    #[ORM\OneToMany(mappedBy: 'animal', targetEntity: FoodConsumption::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'animal', targetEntity: FoodConsumption::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $foodConsumptions;
 
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(mappedBy: 'animal', targetEntity: Image::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'animal', targetEntity: Image::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $images;
 
     public function __construct()

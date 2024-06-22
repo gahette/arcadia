@@ -19,6 +19,9 @@ upgrade: ## Met à jour le projet avec les informations de composer.json (met à
 entity: ## Création d'une entité ou modification d'une entité
 	php bin/console make:entity
 
+form: ## Crée un formulaire Symfony
+	php bin/console make:form
+
 migration: ## Génération d'une migration avec les changements des entités
 	php bin/console make:migration
 
@@ -33,7 +36,7 @@ db.drop:
 db.create:
 	php bin/console doctrine:database:create
 
-admin.crud:
+admin.crud: ## Crée un CRUD pour l'admin (EasyAdmin)
 	php bin/console make:admin:crud
 
 

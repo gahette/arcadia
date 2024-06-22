@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Animal;
 use App\Entity\FoodConsumption;
 use App\Entity\Habitat;
+use App\Entity\Image;
 use App\Entity\OpeningHour;
 use App\Entity\Service;
 use App\Entity\Testimonial;
@@ -43,8 +44,9 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Arcadia')
-            ->renderContentMaximized();
+            ->renderContentMaximized()
+            ->setTitle('Arcadia');
+
     }
 
     public function configureCrud(): Crud
@@ -60,12 +62,25 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+
+        yield MenuItem::section('Données');
+
+
         yield MenuItem::linkToCrud('Services', 'fas fa-bell-concierge', Service::class);
         yield MenuItem::linkToCrud('Habitats', 'fas fa-tents', Habitat::class);
         yield MenuItem::linkToCrud('Animaux', 'fas fa-paw', Animal::class);
+        yield MenuItem::linkToCrud('Horaires d\'ouvertures', 'fas fa-clock', OpeningHour::class);
+
+        yield MenuItem::section('Sous-données');
+
         yield MenuItem::linkToCrud('Rapports vétérinaire', 'fas fa-file-medical', VetReport::class);
         yield MenuItem::linkToCrud('Consommation alimentaire', 'fas fa-bowl-food', FoodConsumption::class);
+
+
+        yield MenuItem::linkToCrud('Images', 'fas fa-images', Image::class);
+
+        yield MenuItem::section('');
+
         yield MenuItem::linkToCrud('Avis', 'fas fa-gavel', Testimonial::class);
-        yield MenuItem::linkToCrud('Horaires d\'ouvertures', 'fas fa-clock', OpeningHour::class);
     }
 }

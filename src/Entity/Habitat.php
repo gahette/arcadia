@@ -11,8 +11,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: HabitatRepository::class)]
+#[Vich\Uploadable]
 class Habitat
 {
     use HasIdTrait;
@@ -20,40 +22,25 @@ class Habitat
     use HasDescriptionTrait;
     use TimestampableEntity;
 
-    #[ORM\Column(length: 128, nullable: true)]
-    private ?string $state = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $comment = null;
 
     /**
      * @var Collection<int, Animal>
      */
-    #[ORM\OneToMany(mappedBy: 'habitat', targetEntity: Animal::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'habitat', targetEntity: Animal::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $animals;
 
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(mappedBy: 'habitat', targetEntity: Image::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'habitat', targetEntity: Image::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $images;
 
     public function __construct()
     {
         $this->animals = new ArrayCollection();
         $this->images = new ArrayCollection();
-    }
-
-    public function getState(): ?string
-    {
-        return $this->state;
-    }
-
-    public function setState(?string $state): static
-    {
-        $this->state = $state;
-
-        return $this;
     }
 
     public function getComment(): ?string

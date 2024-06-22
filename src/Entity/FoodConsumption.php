@@ -6,12 +6,13 @@ use App\Entity\Traits\HasIdTrait;
 use App\Repository\FoodConsumptionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\Timestampable;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: FoodConsumptionRepository::class)]
 class FoodConsumption
 {
     use HasIdTrait;
-    use Timestampable;
+    use TimestampableEntity;
 
     #[ORM\Column(length: 128, nullable: true)]
     private ?string $food = null;
@@ -57,5 +58,9 @@ class FoodConsumption
         $this->animal = $animal;
 
         return $this;
+    }
+    public function __toString(): string
+    {
+        return $this->getFood();
     }
 }

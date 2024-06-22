@@ -2,31 +2,31 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\FoodConsumption;
+use App\Entity\Image;
+use App\Field\VichImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 
-class FoodConsumptionCrudController extends AbstractCrudController
+class ImageCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return FoodConsumption::class;
+        return Image::class;
     }
 
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setPageTitle(Crud::PAGE_INDEX, 'Consommation Alimentaire')
-            ->setPageTitle(Crud::PAGE_DETAIL, 'Détails de la consommation')
-            ->setPageTitle(Crud::PAGE_EDIT, 'Modifier la consommation')
-            ->setPageTitle(Crud::PAGE_NEW, 'Créer une nouvelle consommation');
+            ->setPageTitle(Crud::PAGE_INDEX, 'Images')
+            ->setPageTitle(Crud::PAGE_DETAIL, 'Détails de l\'image')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Modifier l\'image')
+            ->setPageTitle(Crud::PAGE_NEW, 'Créer une nouvelle image');
     }
 
     public function configureActions(Actions $actions): Actions
@@ -34,7 +34,7 @@ class FoodConsumptionCrudController extends AbstractCrudController
         return $actions
 //            ->add(Crud::PAGE_INDEX, Action::NEW)
             ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
-                return $action->setLabel('Créer une nouvelle consommation');
+                return $action->setLabel('Créer une image');
             });
     }
 
@@ -42,11 +42,13 @@ class FoodConsumptionCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
+            TextEditorField::new('description'),
+            IntegerField::new('size')->hideOnForm(),
+            VichImageField::new('file'),
+            IntegerField::new('priority'),
             AssociationField::new('animal'),
-            TextField::new('food', 'Aliment'),
-            NumberField::new('quantity', 'Quantité en grammes'),
-            DateTimeField::new('createdAt')->hideOnForm(),
-            DateTimeField::new('updatedAt')->hideOnForm(),
+            AssociationField::new('habitat'),
+            AssociationField::new('user'),
         ];
     }
 }

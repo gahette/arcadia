@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Entity\Traits\HasDescriptionTrait;
 use App\Entity\Traits\HasIdTrait;
-use App\Entity\Traits\HasNameTrait;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -17,7 +16,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Image
 {
     use HasIdTrait;
-    use HasNameTrait;
     use HasDescriptionTrait;
     use TimestampableEntity;
 
@@ -27,11 +25,11 @@ class Image
     #[ORM\Column(length: 128)]
     private ?string $path = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $size = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Animal $animal = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
@@ -63,7 +61,7 @@ class Image
         return $this->path;
     }
 
-    public function setPath(string $path): static
+    public function setPath(?string $path): static
     {
         $this->path = $path;
 
@@ -75,7 +73,7 @@ class Image
         return $this->size;
     }
 
-    public function setSize(int $size): static
+    public function setSize(?int $size): static
     {
         $this->size = $size;
 
@@ -139,5 +137,10 @@ class Image
             // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTime();
         }
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->getPath();
     }
 }

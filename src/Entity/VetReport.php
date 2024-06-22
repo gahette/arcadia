@@ -21,6 +21,15 @@ class VetReport
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
 
+    #[ORM\Column(length: 128, nullable: true)]
+    private ?string $state = null;
+
+    #[ORM\Column(length: 128, nullable: true)]
+    private ?string $food = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $quantity = null;
+
     public function getContent(): ?string
     {
         return $this->content;
@@ -48,5 +57,41 @@ class VetReport
     public function __toString(): string
     {
         return $this->getContent().' ('.$this->getId().')';
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(?string $state): static
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    public function getFood(): ?string
+    {
+        return $this->food;
+    }
+
+    public function setFood(?string $food): static
+    {
+        $this->food = $food;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(?int $quantity): static
+    {
+        $this->quantity = $quantity;
+
+        return $this;
     }
 }
