@@ -30,7 +30,8 @@ class ImageType extends AbstractType
             ->add('habitat', EntityType::class, [
                 'class' => Habitat::class,
             ])
-            ->add('user', EntityType::class, [
+            ->
+            add('user', EntityType::class, [
                 'class' => User::class,
                 'label' => 'Créé par',
             ]);

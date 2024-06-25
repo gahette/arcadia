@@ -19,7 +19,7 @@ final class VichImageField implements FieldInterface
             ->setProperty($propertyName)
             ->setLabel($label)
             ->setTemplatePath('admin/fields/vich_image.html.twig')
-            ->setFormType(VichImageType::class)
-            ->addCssClass('field-vich-image');
+            ->setFormType(VichImageType::class);
+        //            ->addCssClass('field-vich-image');
     }
 }

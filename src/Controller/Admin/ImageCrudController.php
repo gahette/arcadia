@@ -42,13 +42,12 @@ class ImageCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
+            VichImageField::new('file'),
+            AssociationField::new('habitat'),
+            AssociationField::new('animal'),
             TextEditorField::new('description'),
             IntegerField::new('size')->hideOnForm(),
-            VichImageField::new('file'),
             IntegerField::new('priority'),
-            AssociationField::new('animal'),
-            AssociationField::new('habitat'),
-            AssociationField::new('user'),
         ];
     }
 }

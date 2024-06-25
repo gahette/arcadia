@@ -42,53 +42,70 @@ class HabitatCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $animalsField = CollectionField::new('animals', 'Liste des animaux')->onlyOnForms();
+        $imagesField = CollectionField::new('images')->onlyOnForms();
 
         if (Crud::PAGE_INDEX === $pageName) {
             $animalsField = TextEditorField::new('animals', 'Liste des animaux')
                 ->formatValue(function ($value, $entity) {
-                    $sortedReports = $entity->getAnimals()->toArray();
-                    usort($sortedReports, function ($a, $b) {
+                    $sortedAnimals = $entity->getAnimals()->toArray();
+                    usort($sortedAnimals, function ($b, $a) {
                         return $b->getUpdatedAt() <=> $a->getUpdatedAt();
                     });
 
-                    return implode(PHP_EOL.PHP_EOL, array_map(function ($report) {
-                        $updatedAt = $report->getUpdatedAt();
+                    return implode(PHP_EOL.PHP_EOL, array_map(function ($animal) {
+                        $updatedAt = $animal->getUpdatedAt();
                         $date = $updatedAt ? $updatedAt->format('d-m-Y H:i:s') : 'Date non disponible';
 
                         return sprintf(
                             '<strong>Race:</strong> %s (%s)'.PHP_EOL.'<strong>Date d\'entrée au Zoo:</strong> %s'.PHP_EOL.'<strong>Mise à jour:</strong> %s',
-                            $report->getName(),
-                            $report->getId(),
-                            $report->getCreatedAt()->format('d-m-Y H:i:s'),
-                            $report->getCreatedAt()->format('d-m-Y H:i:s'),
+                            $animal->getName(),
+                            $animal->getId(),
+                            $animal->getCreatedAt()->format('d-m-Y H:i:s'),
+                            $animal->getCreatedAt()->format('d-m-Y H:i:s'),
                         );
-                    }, $sortedReports));
+                    }, $sortedAnimals));
                 })->onlyOnIndex();
         }
-
-        $imagesField = CollectionField::new('images')->onlyOnForms();
 
         if (Crud::PAGE_INDEX === $pageName) {
             $imagesField = TextEditorField::new('images')
                 ->formatValue(function ($value, $entity) {
-                    $sortedReports = $entity->getImages()->toArray();
-                    usort($sortedReports, function ($a, $b) {
+                    $sortedImages = $entity->getImages()->toArray();
+                    usort($sortedImages, function ($a, $b) {
                         return $b->getUpdatedAt() <=> $a->getUpdatedAt();
                     });
 
-                    return implode(PHP_EOL.PHP_EOL, array_map(function ($report) {
-                        $updatedAt = $report->getUpdatedAt();
+                    return implode(PHP_EOL.PHP_EOL, array_map(function ($image) {
+                        $updatedAt = $image->getUpdatedAt();
                         $date = $updatedAt ? $updatedAt->format('d-m-Y H:i:s') : 'Date non disponible';
 
-                        return sprintf(
-                            '<strong>Image:</strong> %s (%s)'.PHP_EOL.'<strong>Habitat:</strong> %s'.PHP_EOL.'<strong>Animal:</strong> %s'.PHP_EOL.'<strong>Mise à jour:</strong> %s',
-                            $report->getPath(),
-                            $report->getId(),
-                            $report->getHabitat(),
-                            $report->getAnimal(),
-                            $report->getCreatedAt()->format('d-m-Y H:i:s'),
-                        );
-                    }, $sortedReports));
+                        if (null === $image->getAnimal()) {
+                            return sprintf(
+                                '<img src="/images/%s" alt="Image de l\'animal" style="max-width: 200px;">'
+                                .PHP_EOL.'<strong>Image ID:</strong> %s'
+                                .PHP_EOL.'<strong>Habitat:</strong> %s'
+                                .PHP_EOL.'<strong>Mise à jour:</strong> %s',
+                                $image->getPath(),
+                                $image->getId(),
+                                $image->getHabitat(),
+                                $image->getCreatedAt()->format('d-m-Y H:i:s'),
+                            );
+                        } else {
+                            return sprintf(
+                                '<img src="/images/%s" alt="Image de l\'animal" style="max-width: 200px;">'
+                                .PHP_EOL.'<strong>Image ID:</strong> %s'
+                                .PHP_EOL.'<strong>Habitat:</strong> %s'
+                                .PHP_EOL.'<strong>Animal:</strong> %s (%s)'
+                                .PHP_EOL.'<strong>Mise à jour:</strong> %s',
+                                $image->getPath(),
+                                $image->getId(),
+                                $image->getHabitat(),
+                                $image->getAnimal()->getNikname(),
+                                $image->getAnimal(),
+                                $image->getCreatedAt()->format('d-m-Y H:i:s'),
+                            );
+                        }
+                    }, $sortedImages));
                 })->onlyOnIndex();
         }
 

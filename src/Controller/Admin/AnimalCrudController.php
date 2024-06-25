@@ -74,24 +74,28 @@ class AnimalCrudController extends AbstractCrudController
 
             $imagesField = TextEditorField::new('images')
                 ->formatValue(function ($value, $entity) {
-                    $sortedReports = $entity->getImages()->toArray();
-                    usort($sortedReports, function ($a, $b) {
+                    $sortedImages = $entity->getImages()->toArray();
+                    usort($sortedImages, function ($a, $b) {
                         return $b->getUpdatedAt() <=> $a->getUpdatedAt();
                     });
 
-                    return implode(PHP_EOL.PHP_EOL, array_map(function ($report) {
-                        $updatedAt = $report->getUpdatedAt();
+                    return implode(PHP_EOL.PHP_EOL, array_map(function ($image) {
+                        $updatedAt = $image->getUpdatedAt();
                         $date = $updatedAt ? $updatedAt->format('d-m-Y H:i:s') : 'Date non disponible';
 
                         return sprintf(
-                            '<strong>Image:</strong> %s (%s)'.PHP_EOL.'<strong>Habitat:</strong> %s'.PHP_EOL.'<strong>Animal:</strong> %s'.PHP_EOL.'<strong>Mise à jour:</strong> %s',
-                            $report->getPath(),
-                            $report->getId(),
-                            $report->getHabitat(),
-                            $report->getAnimal(),
-                            $report->getCreatedAt()->format('d-m-Y H:i:s'),
+                            '<img src="/images/%s" alt="Image de l\'animal" style="max-width: 200px;">'
+                            .PHP_EOL.'<strong>Image ID:</strong> %s'
+                            .PHP_EOL.'<strong>Habitat:</strong> %s'
+                            .PHP_EOL.'<strong>Animal:</strong> %s'
+                            .PHP_EOL.'<strong>Mise à jour:</strong> %s',
+                            $image->getPath(),
+                            $image->getId(),
+                            $image->getHabitat()->getName(),
+                            $image->getAnimal()->getNikname(),
+                            $image->getCreatedAt()->format('d-m-Y H:i:s'),
                         );
-                    }, $sortedReports));
+                    }, $sortedImages));
                 })->onlyOnIndex();
         }
 

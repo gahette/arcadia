@@ -22,23 +22,19 @@ class Image
     #[ORM\Column(nullable: true)]
     private ?int $priority = null;
 
-    #[ORM\Column(length: 128)]
+    #[ORM\Column(length: 128, nullable: true)]
     private ?string $path = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $size = null;
 
-    #[ORM\ManyToOne(inversedBy: 'images')]
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Animal $animal = null;
 
-    #[ORM\ManyToOne(inversedBy: 'images')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Habitat $habitat = null;
-
-    #[ORM\ManyToOne(inversedBy: 'images')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
 
     // NOTE: This is not a mapped field of entity metadata, just a simple property.
     #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'path', size: 'size')]
@@ -100,18 +96,6 @@ class Image
     public function setHabitat(?Habitat $habitat): static
     {
         $this->habitat = $habitat;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
 
         return $this;
     }

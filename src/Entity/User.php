@@ -4,28 +4,27 @@ namespace App\Entity;
 
 use App\Entity\Traits\HasIdTrait;
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use HasIdTrait;
     use TimestampableEntity;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 128)]
     private ?string $lastname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 128)]
     private ?string $firstname = null;
-
     #[ORM\Column(length: 180)]
+    #[Assert\Email]
+    #[Assert\NotBlank]
     private ?string $email = null;
 
     /**
@@ -40,36 +39,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    /**
-     * @var Collection<int, Image>
-     */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Image::class, orphanRemoval: true)]
-    private Collection $images;
-
-    public function __construct()
-    {
-        $this->images = new ArrayCollection();
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(?string $lastname): void
-    {
-        $this->lastname = $lastname;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(?string $firstname): void
-    {
-        $this->firstname = $firstname;
-    }
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4)]
+    private ?string $plainPassword = null;
 
     public function getEmail(): ?string
     {
@@ -120,7 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): ?string
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -132,43 +104,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): void
+    {
+        $this->lastname = $lastname;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): void
+    {
+        $this->firstname = $firstname;
+    }
+
     /**
      * @see UserInterface
      */
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
-    }
-
-    /**
-     * @return Collection<int, Image>
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    public function addImage(Image $image): static
-    {
-        if (!$this->images->contains($image)) {
-            $this->images->add($image);
-            $image->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Image $image): static
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getUser() === $this) {
-                $image->setUser(null);
-            }
-        }
-
-        return $this;
+        $this->plainPassword = null;
     }
 
     public function __toString(): string
