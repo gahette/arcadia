@@ -20,6 +20,5 @@ final class VichImageField implements FieldInterface
             ->setLabel($label)
             ->setTemplatePath('admin/fields/vich_image.html.twig')
             ->setFormType(VichImageType::class);
-        //            ->addCssClass('field-vich-image');
     }
 }

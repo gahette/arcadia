@@ -58,13 +58,6 @@ class NewUserListener implements EventSubscriberInterface
                 'username' => $user->getEmail(),
                 'userRole' => $this->getUserRoleLabel($user->getRoles()),
             ]);
-        //
-        //        try {
-        //            $this->mailer->send($email);
-        //            $this->requestStack->getSession()->getFlashBag()->add('success', 'L\'e-mail de bienvenue a bien été envoyé à '.$user->getFirstname().' '.$user->getLastname().' avec succès !');
-        //        } catch (TransportExceptionInterface $e) {
-        //            $this->requestStack->getSession()->getFlashBag()->add('error', 'L\'envoi de l\'e-mail de bienvenue n\'a pas pu être envoyé à '.$user->getFirstname().' '.$user->getLastname());
-        //        }
 
         try {
             $this->mailer->send($email);

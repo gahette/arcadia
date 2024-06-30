@@ -676,4 +676,76 @@ et ajouté dans le mappings de config/packages/vich_uploader.yaml
                 service: App\Namer\ImageDirectoryNamer
 ```
 
+- ### <span style="color: purple">Administration du zoo</span>
+
+Pour gestion du zoo en fonction des roles de chaque utilisateur.
+
+#### installation du bundle Easyadmin
+
+```composer require easycorp/easyadmin-bundle ```
+
+et ensuite créé le dashboard avec ```php bin/console make:admin:dashboard```
+
+J'ai défini une route et créé le template qui correspond "dashboard.html.twig" dans un dossier admin/fields
+
+ #### ensuite j'ai créé un CRUD pour chaque entité avec ```php bin/console make:admin:crud```
+
+créé un champs pour les images "VichImageField.php" (pour au final ne pas m'en servir)
+
+Pour alimenter les collections dans les CRUDs j'ai mis en place un dossier form dans lequel j'ai créé plusieurs Types
+
+c'est ce que j'ai utilisé pour gérer les images.
+
+C'est dans cette partie que j'ai supprimé le dossier Namer et supprimé aussi "directory_namer:..." dans config/packages/vich_uploader.yaml
+
+par contre j'ai ajouté
+```angular2html
+        inject_on_load: true
+        delete_on_update: true
+        delete_on_remove: true
+```
+
+je me suis battu avec ma base de donnée pour que tous fonctionne (j'ai supprimé, j'ai rajouté, j'ai modifié...)
+
+
+- ### <span style="color: purple">Envoie d'Email au nouvel utilisateur créé</span>
+
+#### Système mailer pour envoyer un mail et MailTrap pour simuler une boite email.
+
+installation de ```composer require symfony/mailer```
+
+je me suis créé un compte Mailtrap pour simuler la reception de mail
+
+dans mon .env.local j'ai rajouter les paramètre qui me permet de communiquer avec MailTrap
+
+pour qu'il n'y ai pas de conflit, j'ai modifié messenger.yaml dans config/packages
+
+en remplaçant les async par sync (bien, pas bien ??)
+
+Et ajout des fichiers Eventlistener/NewUserListener.php et emails/welcome.html.twig qui le relie
+
+Dans services.yaml :
+```angular2html
+parameters:
+    admin_email: 'jose@arcadia.com'
+```
+et
+```
+    App\EventListener\NewUserListener:
+        arguments:
+            $mailer: '@mailer.mailer'
+        tags:
+            - { name: kernel.event_subscriber }
+```
+
+- ### <span style="color: purple"></span>
+
+
+
+
+
+
+
+
+
 [//]: # todo sql avec image
