@@ -11,7 +11,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[IsGranted('ROLE_SUPER_ADMIN')]
 class UserCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
@@ -45,11 +47,10 @@ class UserCrudController extends AbstractCrudController
             TextField::new('firstname'),
             EmailField::new('email'),
             ChoiceField::new('roles')
-            ->setChoices(
-                ['Super admin' => 'ROLE_SUPER_ADMIN',
-                    'Administrateur' => 'ROLE_ADMIN',
-                    'Employé' => 'ROLE_EMPLOYEE',
-                    'Vétérinaire' => 'ROLE_VETERINARIAN', ])
+                ->setChoices(
+                    ['Administrateur' => 'ROLE_ADMIN',
+                        'Employé' => 'ROLE_EMPLOYEE',
+                        'Vétérinaire' => 'ROLE_VETERINARIAN', ])
             ->setRequired(isRequired: false)
             ->allowMultipleChoices(),
             TextField::new('plainPassword', 'Mot de passe')->onlyOnForms(),

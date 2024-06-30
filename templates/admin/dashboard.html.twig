@@ -1,6 +1,39 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block page_title %}
-    Administration du Zoo
+    <h1>Administration du Zoo</h1>
 {% endblock %}
 
+{% block page_actions %}
+    <a class="btn btn-primary" href="{{ path('app_home_index') }}">Retour au site</a>
+{% endblock %}
+
+{% block main %}
+    <h2>Bienvenue sur la page d'administration de gestion des animaux de notre zoo.</h2>
+    <div>
+        <p>
+            <br>
+            Cet espace est dédié à nos équipes pour leur permettre de gérer avec soin et efficacité tous les aspects
+            liés au
+            bien-être de nos animaux.<br>
+            Notre objectif est de garantir des soins optimaux, un environnement enrichissant et une santé excellente
+            pour
+            chaque habitant de notre zoo.
+        </p>
+    </div>
+
+    <div>
+        <p>
+            Cette page d'administration est conçue pour optimiser la gestion de tous les aspects relatifs aux animaux du
+            zoo. Nos objectifs principaux sont :
+        </p>
+        <ul>
+            <li>Fournir des soins médicaux de qualité et personnalisés à chaque animal.</li>
+            <li>Maintenir un environnement propre, sûr et enrichissant pour tous nos résidents.</li>
+            <li>Faciliter le travail de notre équipe grâce à des outils de gestion efficaces et intuitifs.</li>
+        </ul>
+        <p>En centralisant ces fonctions essentielles, nous assurons le bien-être continu de nos animaux et soutenons
+            notre mission de conservation et d'éducation.</p>
+    </div>
+    <div>José Latouche</div>
+{% endblock %}

@@ -8,13 +8,16 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 
-#[\AllowDynamicProperties] class NewUserListener implements EventSubscriberInterface
+#[\AllowDynamicProperties]
+class NewUserListener implements EventSubscriberInterface
 {
     private MailerInterface $mailer;
     private string $adminEmail;
+    private RequestStack $requestStack;
 
     public function __construct(
         #[Autowire('%admin_email%')] string $adminEmail,
@@ -46,7 +49,7 @@ use Symfony\Component\Mailer\MailerInterface;
     {
         $email = (new TemplatedEmail())
             ->from($this->adminEmail)
-            ->to($user->getEmail())
+            ->to((string) $user->getEmail())
             ->subject('Bienvenue chez Arcadia')
             ->htmlTemplate('emails/welcome.html.twig')
             ->context([
@@ -55,15 +58,33 @@ use Symfony\Component\Mailer\MailerInterface;
                 'username' => $user->getEmail(),
                 'userRole' => $this->getUserRoleLabel($user->getRoles()),
             ]);
+        //
+        //        try {
+        //            $this->mailer->send($email);
+        //            $this->requestStack->getSession()->getFlashBag()->add('success', 'L\'e-mail de bienvenue a bien été envoyé à '.$user->getFirstname().' '.$user->getLastname().' avec succès !');
+        //        } catch (TransportExceptionInterface $e) {
+        //            $this->requestStack->getSession()->getFlashBag()->add('error', 'L\'envoi de l\'e-mail de bienvenue n\'a pas pu être envoyé à '.$user->getFirstname().' '.$user->getLastname());
+        //        }
 
         try {
             $this->mailer->send($email);
-            $this->requestStack->getSession()->getFlashBag()->add('success', 'L\'e-mail de bienvenue a bien été envoyé à '.$user->getFirstname().' '.$user->getLastname().' avec succès !');
+
+            // Vérifiez si la session est du type `Session`
+            $session = $this->requestStack->getSession();
+            if ($session instanceof Session) {
+                $session->getFlashBag()->add('success', 'L\'e-mail de bienvenue a bien été envoyé à '.$user->getFirstname().' '.$user->getLastname().' avec succès !');
+            }
         } catch (TransportExceptionInterface $e) {
-            $this->requestStack->getSession()->getFlashBag()->add('error', 'L\'envoi de l\'e-mail de bienvenue n\'a pas pu être envoyé à '.$user->getFirstname().' '.$user->getLastname());
+            $session = $this->requestStack->getSession();
+            if ($session instanceof Session) {
+                $session->getFlashBag()->add('error', 'L\'envoi de l\'e-mail de bienvenue n\'a pas pu être envoyé à '.$user->getFirstname().' '.$user->getLastname());
+            }
         }
     }
 
+    /**
+     * @param array<string> $roles
+     */
     private function getUserRoleLabel(array $roles): string
     {
         if (in_array('ROLE_SUPER_ADMIN', $roles)) {

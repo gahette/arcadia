@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Animal;
 use App\Entity\Habitat;
 use App\Entity\Image;
-use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,11 +28,6 @@ class ImageType extends AbstractType
             ])
             ->add('habitat', EntityType::class, [
                 'class' => Habitat::class,
-            ])
-            ->
-            add('user', EntityType::class, [
-                'class' => User::class,
-                'label' => 'Créé par',
             ]);
     }
 

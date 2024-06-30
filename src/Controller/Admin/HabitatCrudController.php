@@ -109,6 +109,23 @@ class HabitatCrudController extends AbstractCrudController
                 })->onlyOnIndex();
         }
 
+        if ($this->isGranted('ROLE_VETERINARIAN')) {
+            return [
+                IdField::new('id')->hideOnForm(),
+                TextField::new('name', 'Nom')->hideOnForm(),
+                $imagesField->hideOnForm(),
+                SlugField::new('slug')->setTargetFieldName('name')->hideOnIndex()->hideOnForm(),
+                CollectionField::new(propertyName: 'images')
+                    ->setEntryType(formTypeFqcn: ImageType::class)
+                    ->allowDelete()
+                    ->allowAdd()
+                    ->onlyOnForms()->hideOnForm(),
+                TextEditorField::new('description', 'Description de l\'habitat')->hideOnForm(),
+                TextEditorField::new('comment', 'Commentaire du vétérinaire'),
+                $animalsField->hideOnForm(),
+            ];
+        }
+
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name', 'Nom'),

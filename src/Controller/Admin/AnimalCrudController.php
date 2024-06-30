@@ -36,11 +36,19 @@ class AnimalCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        return $actions
-//            ->add(Crud::PAGE_INDEX, Action::NEW)
-            ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
-                return $action->setLabel('Créer un nouvel animal');
-            });
+        $actions = parent::configureActions($actions);
+
+        if ($this->isGranted('ROLE_EMPLOYEE')) {
+            $actions
+                ->disable(Action::NEW, Action::DELETE);
+        }
+
+        if ($this->isGranted('ROLE_VETERINARIAN')) {
+            $actions
+                ->disable(Action::EDIT, Action::NEW, Action::DELETE);
+        }
+
+        return $actions;
     }
 
     public function configureFields(string $pageName): iterable
@@ -116,17 +124,137 @@ class AnimalCrudController extends AbstractCrudController
             })->onlyOnIndex();
         }
 
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+            return [
+                IdField::new('id')->hideOnForm(),
+                TextField::new('nikname', 'Prénom'),
+                TextField::new('name', 'Race'),
+                $imagesField,
+                CollectionField::new('images')
+                    ->setEntryType(ImageType::class)
+                    ->allowDelete()
+                    ->allowAdd()
+                    ->onlyOnForms(),
+                SlugField::new('slug')->setTargetFieldName('name'),
+                ChoiceField::new('classification', 'Classification')
+                    ->setChoices([
+                        'Mammifères' => 'Mammifères',
+                        'Oiseaux' => 'Oiseaux',
+                        'Poissons' => 'Poissons',
+                        'Amphibiens' => 'Amphibiens',
+                        'Reptiles' => 'Reptiles',
+                    ]),
+                ChoiceField::new('area', 'Région')
+                    ->setChoices([
+                        'Afrique' => 'Afrique',
+                        'Amérique du Nord' => 'Amérique du Nord',
+                        'Amérique du Sud' => 'Amérique du Sud',
+                        'Asie' => 'Asie',
+                        'Europe' => 'Europe',
+                        'Océanie' => 'Océanie',
+                    ]),
+                AssociationField::new('habitat'),
+                TextEditorField::new('description'),
+                CollectionField::new('foodConsumptions', 'Nourriture consommée')
+                    ->setEntryType(FoodConsumptionType::class)
+                    ->allowDelete()
+                    ->allowAdd()
+                    ->onlyOnForms(),
+                $vetReportsField->hideOnForm(),
+                $foodConsumptionField->hideOnForm(),
+                NumberField::new('consultation_count', 'Nombre de vue')->hideOnForm(),
+            ];
+        }
+
+        if ($this->isGranted('ROLE_VETERINARIAN')) {
+            return [
+                IdField::new('id')->hideOnForm(),
+                TextField::new('nikname', 'Prénom')->hideOnForm(),
+                TextField::new('name', 'Race')->hideOnForm(),
+                $imagesField->hideOnForm(),
+                CollectionField::new('images')
+                    ->setEntryType(ImageType::class)
+                    ->allowDelete()
+                    ->allowAdd()
+                    ->onlyOnForms()
+                    ->hideOnForm(),
+                SlugField::new('slug')->setTargetFieldName('name')->hideOnForm(),
+                ChoiceField::new('classification', 'Classification')
+                    ->setChoices([
+                        'Mammifères' => 'Mammifères',
+                        'Oiseaux' => 'Oiseaux',
+                        'Poissons' => 'Poissons',
+                        'Amphibiens' => 'Amphibiens',
+                        'Reptiles' => 'Reptiles',
+                    ])->hideOnForm(),
+                ChoiceField::new('area', 'Région')
+                    ->setChoices([
+                        'Afrique' => 'Afrique',
+                        'Amérique du Nord' => 'Amérique du Nord',
+                        'Amérique du Sud' => 'Amérique du Sud',
+                        'Asie' => 'Asie',
+                        'Europe' => 'Europe',
+                        'Océanie' => 'Océanie',
+                    ])->hideOnForm(),
+                AssociationField::new('habitat')->hideOnForm(),
+                TextEditorField::new('description')->hideOnForm(),
+                $vetReportsField->hideOnForm(),
+                $foodConsumptionField->hideOnForm(),
+                NumberField::new('consultation_count', 'Nombre de vue')->hideOnForm(),
+            ];
+        }
+
+        if ($this->isGranted('ROLE_EMPLOYEE')) {
+            return [
+                IdField::new('id')->hideOnForm(),
+                TextField::new('nikname', 'Prénom')->hideOnForm(),
+                TextField::new('name', 'Race')->hideOnForm(),
+                $imagesField->hideOnForm(),
+                CollectionField::new('images')
+                    ->setEntryType(ImageType::class)
+                    ->allowDelete()
+                    ->allowAdd()
+                    ->onlyOnForms(),
+                SlugField::new('slug')->setTargetFieldName('name')->hideOnIndex()->hideOnForm(),
+                ChoiceField::new('classification', 'Classification')
+                    ->setChoices([
+                        'Mammifères' => 'Mammifères',
+                        'Oiseaux' => 'Oiseaux',
+                        'Poissons' => 'Poissons',
+                        'Amphibiens' => 'Amphibiens',
+                        'Reptiles' => 'Reptiles',
+                    ])->hideOnForm(),
+                ChoiceField::new('area', 'Région')
+                    ->setChoices([
+                        'Afrique' => 'Afrique',
+                        'Amérique du Nord' => 'Amérique du Nord',
+                        'Amérique du Sud' => 'Amérique du Sud',
+                        'Asie' => 'Asie',
+                        'Europe' => 'Europe',
+                        'Océanie' => 'Océanie',
+                    ])->hideOnForm(),
+                AssociationField::new('habitat')->hideOnForm(),
+                TextEditorField::new('description')->hideOnForm(),
+                CollectionField::new('foodConsumptions', 'Nourriture consommée')
+                    ->setEntryType(FoodConsumptionType::class)
+                    ->allowDelete()
+                    ->allowAdd()
+                    ->onlyOnForms(),
+                $vetReportsField->hideOnForm(),
+                $foodConsumptionField->hideOnForm(),
+                NumberField::new('consultation_count', 'Nombre de vue')->hideOnForm(),
+            ];
+        }
+
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('nikname', 'Prénom'),
             TextField::new('name', 'Race'),
-            $imagesField->hideOnForm(),
-            CollectionField::new(propertyName: 'images')
-                ->setEntryType(formTypeFqcn: ImageType::class)
+            CollectionField::new('images')
+                ->setEntryType(ImageType::class)
                 ->allowDelete()
-                ->allowAdd()
-                ->onlyOnForms(),
-            SlugField::new('slug')->setTargetFieldName('name')->hideOnIndex(),
+                ->allowAdd(),
+            SlugField::new('slug')->setTargetFieldName('name'),
             ChoiceField::new('classification', 'Classification')
                 ->setChoices([
                     'Mammifères' => 'Mammifères',
@@ -149,10 +277,9 @@ class AnimalCrudController extends AbstractCrudController
             CollectionField::new('foodConsumptions', 'Nourriture consommée')
                 ->setEntryType(FoodConsumptionType::class)
                 ->allowDelete()
-                ->allowAdd()
-                ->onlyOnForms(),
-            $vetReportsField->hideOnForm(),
-            $foodConsumptionField->hideOnForm(),
+                ->allowAdd(),
+            $vetReportsField,
+            $foodConsumptionField,
             NumberField::new('consultation_count', 'Nombre de vue')->hideOnForm(),
         ];
     }
