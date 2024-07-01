@@ -463,111 +463,117 @@ Voilà la base de données s'est remplie de ses tables...
 - ### <span style="color: purple">Création de la base de données et des tables sans passer par la migration de Symfony</span>
 
 ```angular2html
-# Création de la base
 CREATE DATABASE arcadia DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 # Création de tables
 create table animal
 (
-    id                 int auto_increment primary key not null,
-    habitat_id         int                            not null,
-    nikname            varchar(128)                   not null,
-    classification     varchar(128)                   not null,
-    area               varchar(128)                   not null,
-    consultation_count int                            null,
-    name               varchar(128)                   not null,
-    slug               varchar(128)                   not null unique,
-    description        longtext                       null,
-    created_at         datetime                       not null,
-    updated_at         datetime                       not null,
-    foreign key (habitat_id) references habitat (id)
+id                 int auto_increment primary key not null,
+habitat_id         int                            null,
+nikname            varchar(128)                   not null,
+classification     varchar(128)                   not null,
+area               varchar(128)                   not null,
+consultation_count int                            null,
+name               varchar(128)                   not null,
+slug               varchar(128)                   not null unique,
+description        longtext                       null,
+created_at         datetime                       not null,
+updated_at         datetime                       not null,
+foreign key (habitat_id) references habitat (id)
 );
 
 create table food_consumption
 (
-    id        int auto_increment primary key not null,
-    animal_id int                            not null,
-    food      varchar(128)                   null,
-    quantity  int                            null,
-    foreign key (animal_id) references animal (id)
+id         int auto_increment primary key not null,
+animal_id  int                            not null,
+food       varchar(128)                   null,
+quantity   int                            null,
+created_at datetime                       not null,
+updated_at datetime                       not null,
+foreign key (animal_id) references animal (id)
 );
 
 create table habitat
 (
-    id          int auto_increment primary key not null,
-    name        varchar(128)                   not null,
-    slug        varchar(128)                   not null unique,
-    description longtext                       null,
-    created_at  datetime                       not null,
-    updated_at  datetime                       not null,
-    state       varchar(128)                   null,
-    comment     longtext                       null
+id          int auto_increment primary key not null,
+name        varchar(128)                   not null,
+slug        varchar(128)                   not null unique,
+description longtext                       null,
+created_at  datetime                       not null,
+updated_at  datetime                       not null,
+state       varchar(128)                   null,
+comment     longtext                       null
 );
 
 create table image
 (
-    id          int auto_increment primary key not null,
-    name        varchar(128)                   not null,
-    slug        varchar(128)                   not null unique,
-    description longtext                       null,
-    created_at  datetime                       not null,
-    updated_at  datetime                       not null,
-    animal_id   int                            not null,
-    habitat_id  int                            not null,
-    user_id     int                            not null,
-    priority    int                            null,
-    path        varchar(128)                   not null,
-    size        double                         not null,
-    foreign key (animal_id) references animal (id),
-    foreign key (habitat_id) references habitat (id),
-    foreign key (user_id) references user (id)
+id          int auto_increment primary key not null,
+name        varchar(128)                   not null,
+slug        varchar(128)                   not null unique,
+description longtext                       null,
+created_at  datetime                       not null,
+updated_at  datetime                       not null,
+animal_id   int                            null,
+habitat_id  int                            null,
+user_id     int                            not null,
+priority    int                            null,
+path        varchar(128)                   not null,
+size        int                            null,
+foreign key (animal_id) references animal (id),
+foreign key (habitat_id) references habitat (id),
+foreign key (user_id) references user (id)
 );
 
 create table opening_hour
 (
-    id           int auto_increment primary key not null,
-    day          varchar(128),
-    opening_time varchar(128),
-    closing_time varchar(128)
+id           int auto_increment primary key not null,
+day          varchar(128),
+opening_time varchar(128),
+closing_time varchar(128)
 );
 
 create table service
 (
-    id          int auto_increment primary key not null,
-    name        varchar(128)                   not null,
-    slug        varchar(128)                   not null unique,
-    description longtext                       null,
-    created_at  datetime                       not null,
-    updated_at  datetime                       not null
+id          int auto_increment primary key not null,
+name        varchar(128)                   not null,
+slug        varchar(128)                   not null unique,
+description longtext                       null,
+created_at  datetime                       not null,
+updated_at  datetime                       not null
 );
 
 create table testimonial
 (
-    id         int auto_increment primary key not null,
-    pseudo     varchar(128)                   not null,
-    is_visible boolean                        not null,
-    created_at datetime                       not null,
-    updated_at datetime                       not null
+id         int auto_increment primary key not null,
+pseudo     varchar(128)                   not null,
+is_visible boolean                        not null,
+created_at datetime                       not null,
+updated_at datetime                       not null
 );
 
 create table user
 (
-    id         int auto_increment primary key not null,
-    lastname   varchar(255)                   not null,
-    firstname  varchar(255)                   not null,
-    email      varchar(180)                   not null unique,
-    roles      json                           not null,
-    password   varchar(255)                   not null,
-    created_at datetime                       not null,
-    updated_at datetime                       not null
+id         int auto_increment primary key not null,
+lastname   varchar(255)                   not null,
+firstname  varchar(255)                   not null,
+email      varchar(180)                   not null unique,
+roles      json                           not null,
+password   varchar(255)                   not null,
+created_at datetime                       not null,
+updated_at datetime                       not null
 );
 
 create table vet_report
 (
-    id        int auto_increment primary key not null,
-    animal_id int                            not null,
-    content   longtext                       null,
-    foreign key (animal_id) references animal (id)
+id         int auto_increment primary key not null,
+animal_id  int                            not null,
+content    longtext                       null,
+state      varchar(128)                   null,
+food       varchar(128)                   null,
+quantity   int                            null,
+created_at datetime                       not null,
+updated_at datetime                       not null,
+foreign key (animal_id) references animal (id)
 );
 ```
 
@@ -738,14 +744,196 @@ et
             - { name: kernel.event_subscriber }
 ```
 
-- ### <span style="color: purple"></span>
+- ### <span style="color: purple">Système de connexion à la base</span>
 
+#### Composant de sécurité
 
+j'ai commencé par installer```composer require symfony/security-bundle```
 
+J'avais déjà commencé à créer mon entity User avec la commande ```php bin/console make:user``` en même temps que mes autres entités.
 
+Ne pas oublier de faire une migration.
 
+#### Se créer un utilisateur
 
+je suis allé dans la base de donnée, j'ai rempli les champs et pour obtenir un mot de passe hasher j'ai lancé la commande ```php bin/console security:hash-password```
 
+Pour remplir la colonne Roles j'ai mis [ROLE_SUPER_ADMIN]
 
+#### Formulaire de connexion
 
-[//]: # todo sql avec image
+Avec ```php bin/console make:security:form-login``` j'ai créé un controller securityController avec dans un premier temps un template security/login.html.twig
+
+et ensuite j'ai changé le template en prenant celui de EasyAdmin en changeant la route de dans le securityController par "@EasyAdmin/page/login.html.twig"
+
+et en adaptant les paramètres.
+
+Dans Security.yaml, j'ai décommenté 
+```
+  access_control:
+    - { path: ^/admin, roles: ROLE_ADMIN }
+```
+
+j'ai aussi ajouté une hiérarchie de ROLE :
+
+```angular2html
+  role_hierarchy:
+    ROLE_ADMIN: [ ROLE_USER ]
+    ROLE_EMPLOYEE: [ ROLE_EMPLOYEE, ROLE_ADMIN ]
+    ROLE_VETERINARIAN: [ ROLE_VETERINARIAN, ROLE_ADMIN ]
+    ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
+```
+
+#### Création du CRUD Utilisateur
+
+j'ai remplacé le champs password par un champs plainPassword pour hasher à la création le mot de passe avant de l'enregistrer dans la base de donnée.
+
+```TextField::new('plainPassword', 'Mot de passe')->onlyOnForms(),```
+
+#### Création d'un EventSubscriber 
+
+Avec la commande ```php bin/console make:subscriber``` j'ai créé la classe "PasswordUpdateSubscriber.php"
+en écoutant l'élément "EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent"
+
+Avec cette class on hashe le mot de passe avant de l'enregistrement dans la base de donnée à la création ou à la mise à jour.
+
+j'ai ajouté dans l'entité User 
+
+```angular2html
+  #[Assert\NotBlank]
+    #[Assert\Length(min: 4)]
+    private ?string $plainPassword = null;
+```
+avec une contrainte de validation,
+
+avec son getter et setter 
+
+et
+
+```angular2html
+ public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        $this->plainPassword = null;
+    }
+```
+Pour effacer les traces de mot de passe par exemple dans un cookie (je n'ai pas creusé la question).
+
+- ### <span style="color: purple">Mise en place des ROLES</span>
+
+Pour que seuls les ROLE_ADMIN puissent se connecter au système d'administration, j'ai ajouté dans le DashboardController un attribut 
+
+```angular2html
+class DashboardController extends AbstractDashboardController
+{
+    #[Route(path: '/admin', name: 'admin_dashboard_index')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function index(): Response
+    { ...
+```
+
+Après pour répartir les droits en fonction des ROLES, j'ai mis en place des conditions sur chaque CRUD
+
+Exemple :
+
+```angular2html
+    yield MenuItem::section('Données');
+        if (!$this->isGranted('ROLE_VETERINARIAN')) {
+            yield MenuItem::linkToCrud('Services', 'fas fa-bell-concierge', Service::class);
+        }
+```
+
+Et dans les CRUDs, j'ai aussi mis des restriction en fonction des ROLES 
+
+exemple extrait de AnimalCrudController.php :
+
+```angular2html
+    if ($this->isGranted('ROLE_VETERINARIAN')) {
+            return [
+                IdField::new('id')->hideOnForm(),
+                TextField::new('nikname', 'Prénom')->hideOnForm(),
+                TextField::new('name', 'Race')->hideOnForm(),
+                $imagesField->hideOnForm(),
+                CollectionField::new('images')
+                    ->setEntryType(ImageType::class)
+                    ->allowDelete()
+                    ->allowAdd()
+                    ->onlyOnForms()
+                    ->hideOnForm(),
+                SlugField::new('slug')->setTargetFieldName('name')->hideOnForm(),
+                ChoiceField::new('classification', 'Classification')
+                    ->setChoices([
+                        'Mammifères' => 'Mammifères',
+                        'Oiseaux' => 'Oiseaux',
+                        'Poissons' => 'Poissons',
+                        'Amphibiens' => 'Amphibiens',
+                        'Reptiles' => 'Reptiles',
+                    ])->hideOnForm(),
+                ChoiceField::new('area', 'Région')
+                    ->setChoices([
+                        'Afrique' => 'Afrique',
+                        'Amérique du Nord' => 'Amérique du Nord',
+                        'Amérique du Sud' => 'Amérique du Sud',
+                        'Asie' => 'Asie',
+                        'Europe' => 'Europe',
+                        'Océanie' => 'Océanie',
+                    ])->hideOnForm(),
+                AssociationField::new('habitat')->hideOnForm(),
+                TextEditorField::new('description')->hideOnForm(),
+                $vetReportsField->hideOnForm(),
+                $foodConsumptionField->hideOnForm(),
+                NumberField::new('consultation_count', 'Nombre de vue')->hideOnForm(),
+            ];
+        }
+```
+
+Ce qui m'a permis de bien répartir les rôles.
+
+- ### <span style="color: purple">Mise en place d'un temps de connexion</span>
+
+En créant 2 classes :
+
+- Dans un dossier Security:
+
+un fichier LoginSussessHandler.php utilisé pour définir le timeout de session après une authentification réussie.
+
+- Dans le dossier EventListener déjà mis en place :
+
+un fichier SessionIdleTimeoutListener.php pour vérifier le timeout de session sur chaque requête et redirige l'utilisateur vers la page de connexion si la session a expiré.
+
+Sans oublier de les enregistrer dans services.yaml :
+
+```angular2html
+    App\EventListener\SessionIdleTimeoutListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    App\Security\LoginSuccessHandler:
+        arguments: [ '@router' ]
+        tags:
+            - { name: monolog.logger, channel: security }
+```
+
+Et dans security.yaml :
+
+```angular2html
+    main:
+      lazy: true
+      provider: app_user_provider
+      form_login:
+        login_path: app_login
+        check_path: app_login
+        always_use_default_target_path: true
+        default_target_path: admin_dashboard_index
+        success_handler: App\Security\LoginSuccessHandler
+        enable_csrf: true
+      logout:
+        path: app_logout
+        # where to redirect after logout
+        # target: app_any_route
+      remember_me:
+        secret: '%kernel.secret%'
+        lifetime: 3600 # Durée de la session en secondes (1 heure)
+        path: /
+        name: REMEMBERME
+```

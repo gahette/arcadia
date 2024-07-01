@@ -48,9 +48,13 @@ class UserCrudController extends AbstractCrudController
             EmailField::new('email'),
             ChoiceField::new('roles')
                 ->setChoices(
-                    ['Administrateur' => 'ROLE_ADMIN',
+                    [
+                        'Super admin' => 'ROLE_SUPER_ADMIN',
+                        'Administrateur' => 'ROLE_ADMIN',
                         'Employé' => 'ROLE_EMPLOYEE',
-                        'Vétérinaire' => 'ROLE_VETERINARIAN', ])
+                        'Vétérinaire' => 'ROLE_VETERINARIAN',
+                    ]
+                )
             ->setRequired(isRequired: false)
             ->allowMultipleChoices(),
             TextField::new('plainPassword', 'Mot de passe')->onlyOnForms(),

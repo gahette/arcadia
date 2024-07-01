@@ -1,11 +1,9 @@
-# Création de la base
 CREATE DATABASE arcadia DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-# Création de tables
 create table animal
 (
     id                 int auto_increment primary key not null,
-    habitat_id         int                            not null,
+    habitat_id         int                            null,
     nikname            varchar(128)                   not null,
     classification     varchar(128)                   not null,
     area               varchar(128)                   not null,
@@ -20,10 +18,12 @@ create table animal
 
 create table food_consumption
 (
-    id        int auto_increment primary key not null,
-    animal_id int                            not null,
-    food      varchar(128)                   null,
-    quantity  int                            null,
+    id         int auto_increment primary key not null,
+    animal_id  int                            not null,
+    food       varchar(128)                   null,
+    quantity   int                            null,
+    created_at datetime                       not null,
+    updated_at datetime                       not null,
     foreign key (animal_id) references animal (id)
 );
 
@@ -47,12 +47,12 @@ create table image
     description longtext                       null,
     created_at  datetime                       not null,
     updated_at  datetime                       not null,
-    animal_id   int                            not null,
-    habitat_id  int                            not null,
+    animal_id   int                            null,
+    habitat_id  int                            null,
     user_id     int                            not null,
     priority    int                            null,
     path        varchar(128)                   not null,
-    size        int                         not null,
+    size        int                            null,
     foreign key (animal_id) references animal (id),
     foreign key (habitat_id) references habitat (id),
     foreign key (user_id) references user (id)
@@ -99,13 +99,14 @@ create table user
 
 create table vet_report
 (
-    id        int auto_increment primary key not null,
-    animal_id int                            not null,
-    content   longtext                       null,
+    id         int auto_increment primary key not null,
+    animal_id  int                            not null,
+    content    longtext                       null,
+    state      varchar(128)                   null,
+    food       varchar(128)                   null,
+    quantity   int                            null,
     created_at datetime                       not null,
     updated_at datetime                       not null,
     foreign key (animal_id) references animal (id)
 );
-
--- todo : ne pas oublier de modifier le pdf
 
