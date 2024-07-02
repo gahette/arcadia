@@ -682,6 +682,8 @@ et ajouté dans le mappings de config/packages/vich_uploader.yaml
                 service: App\Namer\ImageDirectoryNamer
 ```
 
+## <span style="color:green">Système d'administration avec EasyAdmin.</span>
+
 - ### <span style="color: purple">Administration du zoo</span>
 
 Pour gestion du zoo en fonction des roles de chaque utilisateur.
