@@ -11,7 +11,6 @@ import ErrorBoundary from "./components/ErrorBoundary";
 
 const App = () => {
     return (
-
         <BrowserRouter>
             <ErrorBoundary>
                 <div className="App">
@@ -32,9 +31,7 @@ const App = () => {
                 </div>
             </ErrorBoundary>
         </BrowserRouter>
-
     )
         ;
 };
-
 export default App;

@@ -946,159 +946,289 @@ Dans tailwind.config.js, j'ai mis en place les couleurs et police correspondant 
 
 ```angular2html
 theme: {
-        extend: {
-            colors: {
-                transparent: "transparent",
-                primary: "#22C55E",
-                bgColor2: "#F7F7F7",
-                primaryText: "#15803D",
-                bgColor: '#3EBE83',
-                black: '#000000',
-                dark: '#000000BF',
-                darkGrey: '#454545',
-                grey: '#828282',
-            },
-            fontFamily: {
-                'sans': 'Inter, sans-serif'
+extend: {
+screens: {
+'sm': '640px',
+'md': '768px',
+'lg': '1024px',
+'xl': '1280px',
+'2xl': '1536px',
+},
+colors: {
+transparent: "transparent",
+arcadia: "#22C55E",
+bgColor2: "#F7F7F7",
+primaryText: "#15803D",
+bgColor: '#3EBE83',
+black: '#000000',
+dark: '#000000BF',
+darkGrey: '#454545',
+grey: '#828282',
+},
+fontFamily: {
+        'sans': 'Inter, sans-serif'
             },
             fontSize: {
                 'h1Mobile': ['1.5rem', {
-                    lineHeight: '1.813rem',
-                    letterSpacing: '-0.02em',
-                    fontWeight: '700',
-                }],
-                'h1Tablet': ['3rem', {
-                    lineHeight: '3.5rem',
-                    letterSpacing: '-0.02em',
-                    fontWeight: '700',
-                }],
-                'h1Desktop': ['4rem', {
-                    lineHeight: '4.813rem',
-                    letterSpacing: '-0.02em',
-                    fontWeight: '700',
-                }],
-                'logoDesktop': ['2.25rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '700',
-                }],
-                'logoTablet': ['1.25rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '700',
-                }],
-                'logoMobile': ['1.25rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '700',
-                }],
-                'h2Desktop': ['2.5rem', {
-                    lineHeight: '110%',
-                    letterSpacing: '0',
-                    fontWeight: '600',
-                }],
-                'h2Tablet': ['2.25rem', {
-                    lineHeight: '110%',
-                    letterSpacing: '0',
-                    fontWeight: '600',
-                }],
-                'h2Mobile': ['1.5rem', {
-                    lineHeight: '110%',
-                    letterSpacing: '0',
-                    fontWeight: '600',
-                }],
-                'h3Desktop': ['1.25rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '700',
-                }],
-                'h3Tablet': ['1.25rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '700',
-                }],
-                'h3Mobile': ['1.25rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '700',
-                }],
-                'h3Nav': ['1.25rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '500',
-                }],
-                'pDesktop': ['1.5rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '400',
-                }],
-                'pTablet': ['1.5rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '400',
-                }],
-                'pMobile': ['1.5rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '400',
-                }],
-                'cardTablet': ['1rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '400',
-                }],
-                'cardMobile': ['1rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '400',
-                }],
-                'buttonDesktop': ['1.5rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '600',
-                }],
-                'buttonTablet': ['1.25rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '600',
-                }],
-                'buttonMobile': ['1rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '600',
-                }],
-                'footerDesktop': ['1rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '500',
-                }],
-                'footerTablet': ['1rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '500',
-                }],
-                'footerMobile': ['1rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '500',
-                }],
-                'textDesktop': ['1.25rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '400',
-                }],
-                'textTablet': ['1.25rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '400',
-                }],
-                'textMobile': ['1rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '400',
-                }],
-            },
-        },
-    },
+        lineHeight: '1.813rem',
+                letterSpacing: '-0.02em',
+                fontWeight: '700',
+        }],
+'h1Tablet': ['3rem', {
+lineHeight: '3.5rem',
+letterSpacing: '-0.02em',
+fontWeight: '700',
+}],
+'h1Desktop': ['4rem', {
+lineHeight: '4.813rem',
+letterSpacing: '-0.02em',
+fontWeight: '700',
+}],
+'logoDesktop': ['2.25rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '700',
+}],
+'logoTablet': ['1.5rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '700',
+}],
+'logoMobile': ['1.25rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '700',
+}],
+'h2Desktop': ['2.5rem', {
+lineHeight: '110%',
+letterSpacing: '0',
+fontWeight: '600',
+}],
+'h2Tablet': ['2.25rem', {
+lineHeight: '110%',
+letterSpacing: '0',
+fontWeight: '600',
+}],
+'h2Mobile': ['1.5rem', {
+lineHeight: '110%',
+letterSpacing: '0',
+fontWeight: '600',
+}],
+'h3Desktop': ['1.25rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '700',
+}],
+'h3Tablet': ['1.25rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '700',
+}],
+'h3Mobile': ['1.25rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '700',
+}],
+'nav': ['1.25rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '500',
+}],
+'navLg': ['1rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '500',
+}],
+'pDesktop': ['1.5rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '400',
+}],
+'pTablet': ['1.5rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '400',
+}],
+'pMobile': ['1.5rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '400',
+}],
+'cardTablet': ['1rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '400',
+}],
+'cardMobile': ['1rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '400',
+}],
+'buttonDesktop': ['1.5rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '600',
+}],
+'buttonTablet': ['1.25rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '600',
+}],
+'buttonMobile': ['1rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '600',
+}],
+'footerDesktop': ['1rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '500',
+}],
+'footerTablet': ['1rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '500',
+}],
+'footerMobile': ['1rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '500',
+}],
+'textDesktop': ['1.25rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '400',
+}],
+'textTablet': ['1.25rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '400',
+}],
+'textMobile': ['1rem', {
+lineHeight: '150%',
+letterSpacing: '0',
+fontWeight: '400',
+}],
+},
+},
+},
 ```
+
+## <span style="color:green">Réinstallation de React.</span>
+
+Après les problèmes rencontrés lors de ma première mise en place du système de navigation;
+
+J'ai créé un composant ErrorBoundary.jsx, ce qui a réglé quelques erreurs de la console.
+
+Mon principal souci était que lorsque je souhaitais accéder à la page administration, j'avais une erreur 404. Je n'étais pas redirigé vers /admin.
+
+Comme par un commun accord avec moi-même, j'ai désinstallé tout ce qui avait un rapport avec stimulus, reconfiguré webpack, 
+
+J'ai réinstallé React.
+
+J'ai modifié le app.js,
+
+```angular2html
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './styles/app.css';
+import App from "./react/App";
+
+console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+
+const rootElement = document.getElementById('root');
+if (rootElement) {
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+    );
+}
+```
+
+ainsi que le templates base.html.twig
+
+```angular2html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>
+```
+
+j'ai relancé un npm run build
+
+- ### <span style="color: purple">Mise en place de la navigation responsive.</span>
+
+Pour recommencer, j'ai créé un dossier pages et un dossier components :
+
+- dans le dossier page toutes les pages 9(ah ah ah)
+- dans le dossier components les composants, petits morceaux de pages
+
+Pour relier toutes mes pages React au projet Symfony, j'ai mis en place les contrôleurs correspondants et les templates.
+
+exemple : 
+
+Home.jsx avec HomeController.php et home/index.html.twig
+
+Pour faire la navigation, j'ai créé dans le dossier react un fichier App.jx pour définir le routage :
+
+```angular2html
+import React from 'react';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Home from "./pages/Home";
+import Service from "./pages/Service";
+import Habitat from "./pages/Habitat";
+import Animal from "./pages/Animal";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Error from "./pages/_utils/Error";
+import ErrorBoundary from "./components/ErrorBoundary";
+
+const App = () => {
+    return (
+        <BrowserRouter>
+            <ErrorBoundary>
+                <div className="App">
+                    <Routes>
+                        <Route index element={<Home/>}/>
+
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/service" element={<Service/>}/>
+                        <Route path="/habitat" element={<Habitat/>}/>
+                        <Route path="/animal" element={<Animal/>}/>
+                        <Route path="/about" element={<About/>}/>
+                        <Route path="/contact" element={<Contact/>}/>
+                        <Route path="/admin" action="/login"/>
+
+                        <Route path="*" element={<Error/>}/>
+
+                    </Routes>
+                </div>
+            </ErrorBoundary>
+        </BrowserRouter>
+    )
+        ;
+};
+export default App;
+```
+Pour la bar de navigation, je l'ai codé dans un composant Header.jsx car je l'utilise dans plusieurs pages.
+
+- ### <span style="color: purple">Mise en place composant Footer.jsx.</span>
+
+
 
