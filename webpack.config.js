@@ -53,6 +53,10 @@ Encore
         config.corejs = '3.23';
     })
 
+    .configureBabel((config) => {
+        config.presets.push('@babel/preset-react');
+    })
+
     // enables Sass/SCSS support
     //.enableSassLoader()
 
@@ -60,8 +64,6 @@ Encore
     //.enableTypeScriptLoader()
 
     // uncomment if you use React
-    .enableReactPreset()
-
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher
     //.enableIntegrityHashes(Encore.isProduction())
@@ -69,7 +71,7 @@ Encore
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
     .enablePostCssLoader()
-    .enableStimulusBridge('./assets/controllers.json')
+    // .enableStimulusBridge('./assets/controllers.json')
 ;
 
 module.exports = Encore.getWebpackConfig();

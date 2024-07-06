@@ -7,9 +7,16 @@ module.exports = {
     ],
     theme: {
         extend: {
+            screens: {
+                'sm': '640px',
+                'md': '768px',
+                'lg': '1024px',
+                'xl': '1280px',
+                '2xl': '1536px',
+            },
             colors: {
                 transparent: "transparent",
-                primary: "#22C55E",
+                arcadia: "#22C55E",
                 bgColor2: "#F7F7F7",
                 primaryText: "#15803D",
                 bgColor: '#3EBE83',
@@ -42,7 +49,7 @@ module.exports = {
                     letterSpacing: '0',
                     fontWeight: '700',
                 }],
-                'logoTablet': ['1.25rem', {
+                'logoTablet': ['1.5rem', {
                     lineHeight: '150%',
                     letterSpacing: '0',
                     fontWeight: '700',
@@ -82,7 +89,12 @@ module.exports = {
                     letterSpacing: '0',
                     fontWeight: '700',
                 }],
-                'h3Nav': ['1.25rem', {
+                'nav': ['1.25rem', {
+                    lineHeight: '150%',
+                    letterSpacing: '0',
+                    fontWeight: '500',
+                }],
+                'navLg': ['1rem', {
                     lineHeight: '150%',
                     letterSpacing: '0',
                     fontWeight: '500',

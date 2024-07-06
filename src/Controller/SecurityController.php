@@ -32,7 +32,7 @@ class SecurityController extends AbstractController
             // use this method to display a custom favicon: the given path is passed
             // "as is" to the Twig asset() function:
             // <link rel="shortcut icon" href="{{ asset('...') }}">
-            'favicon_path' => '/favicon-admin.svg',
+            //            'favicon_path' => '/favicon-admin.svg',
 
             // the title visible above the login form (define this option only if you are
             // rendering the login template in a regular Symfony controller; when rendering

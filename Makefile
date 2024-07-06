@@ -19,6 +19,9 @@ upgrade: ## Met à jour le projet avec les informations de composer.json (met à
 entity: ## Création d'une entité ou modification d'une entité
 	php bin/console make:entity
 
+controller: ## Création d'un controller
+	php bin/console make:controller
+
 form: ## Crée un formulaire Symfony
 	php bin/console make:form
 

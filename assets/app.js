@@ -1,7 +1,16 @@
-import { registerReactControllerComponents } from '@symfony/ux-react';
-import './bootstrap.js';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import './styles/app.css';
+import App from "./react/App";
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
-registerReactControllerComponents(require.context('./react/controllers', true, /\.(j|t)sx?$/));
+const rootElement = document.getElementById('root');
+if (rootElement) {
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+    );
+}
