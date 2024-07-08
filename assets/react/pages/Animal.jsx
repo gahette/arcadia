@@ -4,7 +4,6 @@ import Header from "../components/public/Header";
 const Animal = () => {
     return (
         <div>
-            <Header/>
             Animal page
         </div>
     );

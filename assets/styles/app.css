@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.separate {
+    border-top: black solid 2px;
+    width: 70%;
+}

@@ -139,17 +139,7 @@ module.exports = {
                     letterSpacing: '0',
                     fontWeight: '600',
                 }],
-                'footerDesktop': ['1rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '500',
-                }],
-                'footerTablet': ['1rem', {
-                    lineHeight: '150%',
-                    letterSpacing: '0',
-                    fontWeight: '500',
-                }],
-                'footerMobile': ['1rem', {
+                'footer': ['1rem', {
                     lineHeight: '150%',
                     letterSpacing: '0',
                     fontWeight: '500',
