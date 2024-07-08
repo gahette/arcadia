@@ -1176,7 +1176,7 @@ j'ai relancé un npm run build
 
 Pour recommencer, j'ai créé un dossier pages et un dossier components :
 
-- dans le dossier page toutes les pages 9(ah ah ah)
+- dans le dossier page toutes les pages (ah ah ah)
 - dans le dossier components les composants, petits morceaux de pages
 
 Pour relier toutes mes pages React au projet Symfony, j'ai mis en place les contrôleurs correspondants et les templates.
@@ -1230,5 +1230,68 @@ Pour la bar de navigation, je l'ai codé dans un composant Header.jsx car je l'u
 
 - ### <span style="color: purple">Mise en place composant Footer.jsx.</span>
 
+Avant de commencer le footer, j'ai créé un layout dans pages pour centraliser le Header et le Footer sur toutes les pages.
 
+```angular2html
+import React from 'react';
+import {Outlet} from "react-router-dom";
+import Header from "../components/public/Header";
+import Footer from "../components/public/Footer";
 
+const Layout = () => {
+    return (
+        <div>
+            <Header/>
+            <Outlet/>
+            <Footer/>
+        </div>
+    );
+};
+
+export default Layout;
+```
+
+Pour simplifier le code, j'ai aussi mis en place un index.jsx dans pages
+
+```angular2html
+export {default as Layout} from './Layout';
+export {default as Home} from './Home';
+export {default as About} from './About';
+export {default as Contact} from './Contact';
+export {default as Animal} from './Animal';
+export {default as Habitat} from './Habitat';
+export {default as Service} from './Service';
+```
+
+Ce qui me permet d'avoir par exemple cette écriture lorsqu'un élément est appelé :
+
+```angular2html
+import {About, Animal, Contact, Habitat, Home, Layout, Service} from "./pages";
+```
+
+Pour palier au problème de redirection avec symfony lorsque je cliquais sur connexion ou que je tapais un chemin qui n'existait.
+
+je mis en place un nouveau contrôleur ReactController.php 
+
+```angular2html
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class ReactController extends AbstractController
+{
+    #[Route('/{reactRouting}', name: 'react_homepage', requirements: ['reactRouting' => '^(?!login).+'], defaults: ['reactRouting' => null])]
+    public function index(): Response
+    {
+        return $this->render('base.html.twig');
+    }
+}
+```
+
+Et ensuite, j'ai codé le Footer.jsx.
+
+- ### <span style="color: purple">Mise en place composant HeroSection.jsx</span>
