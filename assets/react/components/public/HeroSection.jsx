@@ -56,13 +56,13 @@ const HeroSection = () => {
             )}
 
             <div className="absolute inset-x-0 top-auto bottom-2/3 sm:top-72 flex flex-col items-center text-bgColor2 lg:items-start lg:text-left">
-                <div className="lg:text-h1Desktop sm:text-h1Tablet lg:w-auto lg:ml-32 sm:text-center sm:w-full text-h1Mobile">
+                <h1 className="lg:text-h1Desktop sm:text-h1Tablet lg:w-auto lg:ml-32 sm:text-center sm:w-full text-h1Mobile">
                     Venez visiter le zoo ARCADIA
-                </div>
+                </h1>
                 <p className="mt-5 text-pDesktop lg:text-pDesktop sm:text-pTablet sm:text-center sm:w-full lg:w-auto lg:ml-32 hidden md:block">
                     Découvrez le monde de la faune et de la flore au coeur de la forêt de Brocéliande
                 </p>
-                <button className="lg:ml-32 mt-4 px-5 py-3 bg-arcadia rounded-lg border border-arcadia hover:bg-bgColor2 hover:text-arcadia text-bgColor2 lg:text-buttonDesktop sm:text-buttonTablet w-full w-auto text-center text-buttonMobile">
+                <button className="lg:ml-32 mt-4 px-5 py-3 bg-arcadia rounded-lg border border-arcadia hover:bg-bgColor2 hover:text-arcadia text-bgColor2 lg:text-buttonDesktop sm:text-buttonTablet w-auto text-center text-buttonMobile">
                     Ouvert tous les jours dès 10h00
                 </button>
             </div>
