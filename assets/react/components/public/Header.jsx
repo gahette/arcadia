@@ -39,8 +39,8 @@ const Header = () => {
     };
 
     return (
-        <header>
-            <nav className="mt-12 m-auto bg-bgColor2 w-10/12 border-2 rounded-lg z-10 opacity-75 relative drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)]">
+        <header className="relative mx-auto w-10/12">
+            <nav className="absolute mx-auto w-full left-0 right-0 mt-12 bg-bgColor2 border-2 rounded-lg z-10 opacity-75 drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)]">
                 <div className="flex flex-wrap items-center justify-between lg:mx-6  sm:mx-16 p-2 cursor-pointer">
                     <div
                         className="flex flex-wrap items-center 2xl:text-logoDesktop xl:text-logoTablet sm:text-logoMobile text-primaryText">

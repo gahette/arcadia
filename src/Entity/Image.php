@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Entity\Traits\HasDescriptionTrait;
 use App\Entity\Traits\HasIdTrait;
+use App\Entity\Traits\HasTimestampTrait;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
@@ -17,12 +18,14 @@ class Image
 {
     use HasIdTrait;
     use HasDescriptionTrait;
-    use TimestampableEntity;
+    use HasTimestampTrait;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('image:read')]
     private ?int $priority = null;
 
     #[ORM\Column(length: 128, nullable: true)]
+    #[Groups('image:read')]
     private ?string $path = null;
 
     #[ORM\Column(nullable: true)]
@@ -30,6 +33,7 @@ class Image
 
     #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups('animal')]
     private ?Animal $animal = null;
 
     #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'images')]

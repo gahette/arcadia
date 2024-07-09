@@ -3,15 +3,15 @@
 namespace App\Entity;
 
 use App\Entity\Traits\HasIdTrait;
+use App\Entity\Traits\HasTimestampTrait;
 use App\Repository\TestimonialRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: TestimonialRepository::class)]
 class Testimonial
 {
     use HasIdTrait;
-    use TimestampableEntity;
+    use HasTimestampTrait;
 
     #[ORM\Column(length: 128)]
     private ?string $pseudo = null;

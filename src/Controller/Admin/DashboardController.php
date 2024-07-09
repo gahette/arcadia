@@ -57,6 +57,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Données');
         if (!$this->isGranted('ROLE_VETERINARIAN')) {
             yield MenuItem::linkToCrud('Services', 'fas fa-bell-concierge', Service::class);
+            yield MenuItem::linkToCrud('Habitats', 'fas fa-tents', Habitat::class);
         }
         if ($this->isGranted('ROLE_VETERINARIAN')) {
             yield MenuItem::linkToCrud('Habitats', 'fas fa-tents', Habitat::class);

@@ -104,12 +104,12 @@ module.exports = {
                     letterSpacing: '0',
                     fontWeight: '400',
                 }],
-                'pTablet': ['1.5rem', {
+                'pTablet': ['1.3rem', {
                     lineHeight: '150%',
                     letterSpacing: '0',
                     fontWeight: '400',
                 }],
-                'pMobile': ['1.5rem', {
+                'pMobile': ['1.3rem', {
                     lineHeight: '150%',
                     letterSpacing: '0',
                     fontWeight: '400',

@@ -3,15 +3,16 @@
 namespace App\Entity;
 
 use App\Entity\Traits\HasIdTrait;
+use App\Entity\Traits\HasTimestampTrait;
 use App\Repository\FoodConsumptionRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+
 
 #[ORM\Entity(repositoryClass: FoodConsumptionRepository::class)]
 class FoodConsumption
 {
     use HasIdTrait;
-    use TimestampableEntity;
+    use HasTimestampTrait;
 
     #[ORM\Column(length: 128, nullable: true)]
     private ?string $food = null;

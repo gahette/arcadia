@@ -35,7 +35,7 @@ class HabitatCrudController extends AbstractCrudController
         return $actions
 //            ->add(Crud::PAGE_INDEX, Action::NEW)
             ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
-                return $action->setLabel('Créer un nouvel animal');
+                return $action->setLabel('Créer un nouvel habitat');
             });
     }
 

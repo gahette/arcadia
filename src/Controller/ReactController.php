@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReactController extends AbstractController
 {
-    #[Route('/{reactRouting}', name: 'react_homepage', requirements: ['reactRouting' => '^(?!login).+'], defaults: ['reactRouting' => null])]
+    #[Route('/{reactRouting}', name: 'react_homepage', requirements: ['reactRouting' => '^(?!login|logout|api).+'], defaults: ['reactRouting' => null])]
     public function index(): Response
     {
         return $this->render('base.html.twig');

@@ -5,11 +5,12 @@ namespace App\Entity;
 use App\Entity\Traits\HasDescriptionTrait;
 use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasNameTrait;
+use App\Entity\Traits\HasTimestampTrait;
 use App\Repository\AnimalRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
 class Animal
@@ -17,18 +18,22 @@ class Animal
     use HasIdTrait;
     use HasNameTrait;
     use HasDescriptionTrait;
-    use TimestampableEntity;
+    use HasTimestampTrait;
 
     #[ORM\Column(length: 128)]
+    #[Groups('animal:read')]
     private ?string $nikname = null;
 
     #[ORM\Column(length: 128)]
+    #[Groups('animal:read')]
     private ?string $classification = null;
 
     #[ORM\Column(length: 128)]
+    #[Groups('animal:read')]
     private ?string $area = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups('animal:read')]
     private ?int $consultation_count = null;
 
     #[ORM\ManyToOne(inversedBy: 'animals')]
@@ -51,6 +56,7 @@ class Animal
      * @var Collection<int, Image>
      */
     #[ORM\OneToMany(mappedBy: 'animal', targetEntity: Image::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups('animal:read')]
     private Collection $images;
 
     public function __construct()
