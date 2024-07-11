@@ -10,7 +10,7 @@ const legendary =
 
 const CardSection = () => {
     return (
-        <div className='bg-bgColor'>
+        <section className='bg-bgColor'>
             <div className="mx-auto separate"></div>
             <h2 className='m-6 text-center lg:text-h2Desktop sm:text-h2Tablet text-h2Mobile text-primaryText'>Explorer
                 ARCADIA</h2>
@@ -31,7 +31,7 @@ const CardSection = () => {
                 </ul>
 
             </div>
-        </div>
+        </section>
     );
 };
 

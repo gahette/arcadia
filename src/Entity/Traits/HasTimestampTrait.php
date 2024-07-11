@@ -11,12 +11,12 @@ trait HasTimestampTrait
 {
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['animal:read', 'image:read'])]
+    #[Groups(['animal:read', 'image:read', 'testimonial: read'])]
     protected \DateTime $createdAt;
 
     #[Gedmo\Timestampable(on: 'update')]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['animal:read', 'image:read'])]
+    #[Groups(['animal:read', 'image:read', 'testimonial: read'])]
     protected \DateTime $updatedAt;
 
     public function setCreatedAt(\DateTime $createdAt): self

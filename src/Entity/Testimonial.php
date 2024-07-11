@@ -6,6 +6,7 @@ use App\Entity\Traits\HasIdTrait;
 use App\Entity\Traits\HasTimestampTrait;
 use App\Repository\TestimonialRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: TestimonialRepository::class)]
 class Testimonial
@@ -14,12 +15,15 @@ class Testimonial
     use HasTimestampTrait;
 
     #[ORM\Column(length: 128)]
+    #[Groups(['testimonial: read'])]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['testimonial: read'])]
     private ?string $content = null;
 
     #[ORM\Column]
+    #[Groups(['testimonial: read'])]
     private ?bool $is_visible = null;
 
     public function getPseudo(): ?string

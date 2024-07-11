@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useFetch} from "../hooks/useFetch";
 import {Carousel} from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // Assurez-vous d'importer les styles du carousel
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const HeroSection = () => {
     const {items: animals, load, loading} = useFetch('/api/animal');
@@ -11,7 +11,6 @@ const HeroSection = () => {
     }, [load]);
 
     useEffect(() => {
-        console.log("Animals data: ", animals);
     }, [animals]);
 
     return (
@@ -38,7 +37,7 @@ const HeroSection = () => {
                                 {filteredImages.length > 0 ? (
                                     filteredImages.map((image, idx) => (
                                         <img
-                                            className="max-w-full max-h-[597px] object-cover"
+                                            className="max-w-full lg:min-h-[597px] min-h-[453px] sm:object-cover object-cover"
                                             key={idx}
                                             src={`/images/${image.path}`}
                                             alt={image.description || 'Animal image'}
@@ -55,7 +54,7 @@ const HeroSection = () => {
                 !loading && 'Aucun animal trouvé.'
             )}
 
-            <div className="absolute inset-x-0 top-auto bottom-2/3 sm:top-72 flex flex-col items-center text-bgColor2 lg:items-start lg:text-left">
+            <div className="absolute inset-x-0 sm:bottom-2/3 sm:top-72 bottom-3/4 top-auto flex flex-col items-center text-bgColor2 lg:items-start lg:text-left">
                 <h1 className="lg:text-h1Desktop sm:text-h1Tablet lg:w-auto lg:ml-32 sm:text-center sm:w-full text-h1Mobile">
                     Venez visiter le zoo ARCADIA
                 </h1>

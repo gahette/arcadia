@@ -11,8 +11,6 @@ class HabitatController extends AbstractController
     #[Route('/habitat', name: 'app_habitat_index')]
     public function index(): Response
     {
-        return $this->render('habitat/index.html.twig', [
-            'controller_name' => 'HabitatController',
-        ]);
+        return $this->render('habitat/index.html.twig');
     }
 }

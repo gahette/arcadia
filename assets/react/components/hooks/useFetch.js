@@ -35,7 +35,6 @@ export function useFetch(url) {
         setLoading(true)
         try {
             const response = await jsonLdFetch(next || url)
-            console.log("API Response: ", response);
 
             setItems(response || []);
             setCount(response.length || 0);
@@ -53,7 +52,6 @@ export function useFetch(url) {
             }
 
         } catch (error) {
-            console.error("Error fetching data:", error)
         } finally {
             setLoading(false);
         }
@@ -64,3 +62,30 @@ export function useFetch(url) {
     }
 }
 
+export function usePost(url, method = "POST", callback = null) {
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+
+    const load = useCallback(async (data = null) => {
+        setLoading(true)
+        try {
+            const response = await jsonLdFetch(url, method, data)
+            if (callback) {
+                callback(response)
+            }
+        } catch (error) {
+            if (error.violations) {
+                setErrors(error.violations.reduce((acc, violation) => {
+                    acc[violation.propertyPath] = violation.message
+                    return acc
+                }, {}));
+            } else {
+
+            }
+        }
+        setLoading(false)
+    }, [url, method, callback]);
+    return {
+        loading, errors, load
+    }
+}

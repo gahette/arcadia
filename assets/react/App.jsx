@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {About, Animal, Contact, Habitat, Home, Layout, Service} from "./pages";
 import Error from "./pages/_utils/Error";
 import ErrorBoundary from "./components/ErrorBoundary";
+import Testimonials from "./pages/Testimonials";
 
 
 const App = () => {
@@ -23,8 +24,10 @@ const App = () => {
                             <Route path="/about" element={<About/>}/>
                             <Route path="/contact" element={<Contact/>}/>
 
+
                         </Route>
                         <Route>
+                            <Route path="/testimonial" element={<Testimonials/>}/>
                             <Route path="/admin" action="/login"/>
                             <Route path="*" element={<Error/>}/>
                         </Route>
