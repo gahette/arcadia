@@ -32,14 +32,10 @@ class animalController extends AbstractController
     #[Route('/api/animal/{id}/increment-consultation', name: 'increment_consultation_count', methods: ['POST'])]
     public function incrementConsultationCount(Animal $animal, EntityManagerInterface $entityManager): Response
     {
-        if ($animal) {
-            $animal->setConsultationCount($animal->getConsultationCount() + 1);
-            $entityManager->persist($animal);
-            $entityManager->flush();
+        $animal->setConsultationCount($animal->getConsultationCount() + 1);
+        $entityManager->persist($animal);
+        $entityManager->flush();
 
-            return new JsonResponse(['status' => 'success'], JsonResponse::HTTP_OK);
-        }
-
-        return new JsonResponse(['status' => 'error', 'message' => 'Animal not found'], JsonResponse::HTTP_NOT_FOUND);
+        return new JsonResponse(['status' => 'success'], JsonResponse::HTTP_OK);
     }
 }

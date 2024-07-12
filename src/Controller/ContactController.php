@@ -20,9 +20,9 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'contact', methods: ['POST'])]
     public function contact(Request $request, MailerInterface $mailer): Response
     {
-        $name = $request->request->get('name');
-        $email = $request->request->get('email');
-        $message = $request->request->get('message');
+        $name = (string) $request->request->get('name');
+        $email = (string) $request->request->get('email');
+        $message = (string) $request->request->get('message');
 
         $emailMessage = (new Email())
             ->from($email)

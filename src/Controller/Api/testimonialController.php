@@ -34,33 +34,30 @@ class testimonialController extends AbstractController
     #[Route('/api/testimonial', name: 'api_testimonial_post', methods: ['POST'])]
     public function createTestimonial(Request $request, EntityManagerInterface $em, ValidatorInterface $validator): Response
     {
-        // Décoder les données JSON envoyées dans la requête
         $data = json_decode($request->getContent(), true);
 
-        // Vérifier que les données sont bien décodées
-        if (!$data) {
+        if (!is_array($data)) {
             return new JsonResponse(['error' => 'Invalid JSON'], Response::HTTP_BAD_REQUEST);
         }
 
-        // Créer une nouvelle instance de l'entité Testimonial
-        $testimonial = new Testimonial();
-        $testimonial->setPseudo($data['pseudo'] ?? null);
-        $testimonial->setContent($data['content'] ?? null);
-        $testimonial->setIsVisible($data['isVisible'] ?? false);
+        $pseudo = isset($data['pseudo']) && is_string($data['pseudo']) ? $data['pseudo'] : null;
+        $content = isset($data['content']) && is_string($data['content']) ? $data['content'] : null;
+        $isVisible = isset($data['isVisible']) && is_bool($data['isVisible']) ? $data['isVisible'] : false;
 
-        // Valider l'entité
+        $testimonial = new Testimonial();
+        $testimonial->setPseudo($pseudo);
+        $testimonial->setContent($content);
+        $testimonial->setIsVisible($isVisible);
+
         $errors = $validator->validate($testimonial);
 
         if (count($errors) > 0) {
             return new JsonResponse(['errors' => (string) $errors], Response::HTTP_BAD_REQUEST);
         }
 
-        // Sauvegarder l'entité dans la base de données
         $em->persist($testimonial);
         $em->flush();
 
-        // Retourner une réponse de succès
         return new JsonResponse(['status' => 'Testimonial created successfully'], Response::HTTP_CREATED);
     }
 }
-

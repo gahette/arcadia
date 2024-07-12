@@ -69,10 +69,10 @@ const AnimalSection = () => {
 
                                 return (
                                     <div key={index}
-                                         className="flex flex-col items-center bg-white p-4 rounded-lg shadow-md"
+                                         className="bg-bgColor2 rounded-lg shadow p-4 transform transition-transform hover:-translate-y-1 max-w-xs mx-auto"
                                          onClick={() => handleCardClick(animal.id)}
                                     >
-                                        <h3 className="text-darkGrey text-xl font-semibold mb-4">{animal.name}</h3>
+                                        <h3 className="text-start text-arcadia lg:text-h3Desktop sm:text-h3Tablet text-h3Mobile">{animal.name}</h3>
                                         {filteredImages.length > 0 ? (
                                             <Carousel
                                                 autoPlay

@@ -31,7 +31,7 @@ class Testimonial
         return $this->pseudo;
     }
 
-    public function setPseudo(string $pseudo): static
+    public function setPseudo(?string $pseudo): self
     {
         $this->pseudo = $pseudo;
 
@@ -43,7 +43,7 @@ class Testimonial
         return $this->content;
     }
 
-    public function setContent(string $content): static
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 
@@ -55,7 +55,7 @@ class Testimonial
         return $this->is_visible;
     }
 
-    public function setIsVisible(bool $is_visible): static
+    public function setIsVisible(bool $is_visible): self
     {
         $this->is_visible = $is_visible;
 

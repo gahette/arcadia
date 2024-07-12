@@ -34,7 +34,7 @@ const HabitatSection = () => {
                     </p>
                 </div>
                 <div className="mt-24 flex justify-center">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 grid-cols-1 gap-6">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-cols-1 gap-6">
                         {loading && <p>Chargement...</p>}
                         {!loading && habitats.length > 0 ? (
                             habitats.map((habitat, index) => {
@@ -44,10 +44,10 @@ const HabitatSection = () => {
 
                                 return (
                                     <div key={index}
-                                         className="flex flex-col items-center bg-white p-4 rounded-lg shadow-md"
+                                         className="bg-bgColor2 rounded-lg shadow p-4 transform transition-transform hover:-translate-y-1 max-w-xs mx-auto"
                                          onClick={() => handleCardClick(habitat.id)}
                                     >
-                                        <h3 className="text-darkGrey text-xl font-semibold mb-4">{habitat.name}</h3>
+                                        <h3 className="text-start text-arcadia lg:text-h3Desktop sm:text-h3Tablet text-h3Mobile">{habitat.name}</h3>
                                         {filteredImages.length > 0 ? (
                                             <Carousel
                                                 autoPlay

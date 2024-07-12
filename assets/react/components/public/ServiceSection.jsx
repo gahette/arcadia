@@ -24,7 +24,7 @@ const ServiceSection = () => {
                     </p>
                 </div>
                 <div className="mt-24 flex justify-center">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 grid-cols-1 gap-6">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-cols-1 gap-6">
                         {loading && 'Chargement...'}
                         {!loading && services.length > 0 ? (
                             services.map((service, index) => (

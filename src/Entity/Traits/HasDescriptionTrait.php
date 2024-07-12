@@ -24,7 +24,7 @@ trait HasDescriptionTrait
 
     public function setDescription(?string $description): self
     {
-        $this->description = $this->stripHtml($description);
+        $this->description = null !== $description ? $this->stripHtml($description) : null;
 
         return $this;
     }
