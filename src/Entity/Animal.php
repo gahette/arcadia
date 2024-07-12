@@ -38,6 +38,7 @@ class Animal
 
     #[ORM\ManyToOne(inversedBy: 'animals')]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups('animal:read')]
     private ?Habitat $habitat = null;
 
     /**

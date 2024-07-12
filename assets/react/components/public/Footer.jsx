@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 
 const Footer = () => {
     return (
-        <div>
             <footer className="footer bg-arcadia pb-20">
                 <div className="container mx-auto pt-2">
                     <div className="mx-auto separate"></div>
@@ -66,7 +65,6 @@ const Footer = () => {
                 </div>
 
             </footer>
-        </div>
     );
 };
 

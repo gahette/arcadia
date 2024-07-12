@@ -1,10 +1,11 @@
 import React from 'react';
+import ContactSection from "../components/public/ContactSection";
 
 const Contact = () => {
     return (
-        <div>
-            Contact page
-        </div>
+        <main className="flex flex-col">
+            <ContactSection/>
+        </main>
     );
 };
 

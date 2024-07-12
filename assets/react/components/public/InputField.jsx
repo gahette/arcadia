@@ -3,7 +3,7 @@ import React from "react";
 
 const InputField = ({ label, name, type, register, errors, placeholder }) => (
     <div className="sm:col-span-2">
-        <label htmlFor={name} className="block text-sm font-medium font-Barlow text-slate-600">
+        <label htmlFor={name} className="text-footer text-darkGrey">
             {label}
         </label>
         <input
@@ -11,11 +11,11 @@ const InputField = ({ label, name, type, register, errors, placeholder }) => (
             name={name}
             {...register(name)}
             aria-invalid={errors[name] ? "true" : "false"}
-            className="bg-gray-50 border border-slate-600 text-slate-600 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-auto p-2.5 mb-2"
+            className="p-2.5 w-full text-darkGrey bg-bgColor2 rounded-lg border border-darkGrey focus:ring-arcadia focus:border-arcadia"
             placeholder={placeholder}
         />
         {errors[name] && (
-            <p className="font-medium font-Barlow text-red-600" role="alert">
+            <p className="font-medium text-red-600" role="alert">
                 {errors[name].message}
             </p>
         )}

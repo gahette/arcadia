@@ -64,7 +64,7 @@ function TestimonialForm() {
 
     return (
         <section className="bg-bgColor">
-            <div className="my-32 md:pt-32 container mx-auto">
+            <div className="my-40 mx-auto max-w-7xl">
                 <div className="flex flex-col justify-between text-center text-primaryText my-auto mt-32 gap-16">
                     <p className="lg:text-h2Desktop sm:text-h2Tablet text-h2Mobile mx-30 sm:block">Votre avis nous intéresse !</p>
                 </div>

@@ -19,11 +19,11 @@ const Testimonial = () => {
     }, [testimonials]);
 
     return (
-        <div>
+        <section>
             {loading ? (
                 'Chargement...'
             ) : (
-                <div className="my-5 mx-auto lg:w-7/12 sm:w-3/5 w-10/12 bg-bgColor2 rounded-lg ">
+                <div className="lg:my-5 my-12 mx-auto lg:w-7/12 sm:w-3/5 w-10/12 bg-bgColor2 rounded-lg ">
                     {visibleTestimonials.length > 0 ? (
                         <Carousel
                             interval={6000}
@@ -50,7 +50,7 @@ const Testimonial = () => {
                     )}
                 </div>
             )}
-        </div>
+        </section>
     );
 };
 

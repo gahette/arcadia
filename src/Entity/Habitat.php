@@ -22,19 +22,21 @@ class Habitat
     use HasTimestampTrait;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    #[Groups('habitat')]
+    #[Groups('habitat:read')]
     private ?string $comment = null;
 
     /**
      * @var Collection<int, Animal>
      */
     #[ORM\OneToMany(mappedBy: 'habitat', targetEntity: Animal::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups('habitat:read')]
     private Collection $animals;
 
     /**
      * @var Collection<int, Image>
      */
     #[ORM\OneToMany(mappedBy: 'habitat', targetEntity: Image::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups('habitat:read')]
     private Collection $images;
 
     public function __construct()

@@ -1,10 +1,11 @@
 import React from 'react';
+import AnimalSection from "../components/public/AnimalSection";
 
 const Animal = () => {
     return (
-        <div>
-            Animal page
-        </div>
+        <main className="flex flex-col">
+            <AnimalSection/>
+        </main>
     );
 };
 

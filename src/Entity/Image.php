@@ -38,6 +38,7 @@ class Image
 
     #[ORM\ManyToOne(cascade: ['persist', 'remove'], inversedBy: 'images')]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups('habitat')]
     private ?Habitat $habitat = null;
 
     // NOTE: This is not a mapped field of entity metadata, just a simple property.

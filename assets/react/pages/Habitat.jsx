@@ -1,10 +1,11 @@
 import React from 'react';
+import HabitatSection from "../components/public/HabitatSection";
 
 const Habitat = () => {
     return (
-        <div>
-           Habitat page
-        </div>
+        <main className="flex flex-col">
+            <HabitatSection/>
+        </main>
     );
 };
 

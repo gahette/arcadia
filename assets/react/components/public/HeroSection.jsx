@@ -11,6 +11,7 @@ const HeroSection = () => {
     }, [load]);
 
     useEffect(() => {
+        console.log(animals)
     }, [animals]);
 
     return (
@@ -70,6 +71,7 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
 
 
 
