@@ -21,7 +21,7 @@ const CardSection = () => {
                             <Link to={item.id}>
                                 <img
                                     className='rounded-lg object-fit-cover w-[354px] h-[232px]'
-                                    src={`./images/homePictures/${item.path}`}
+                                    src={`./homePictures/${item.path}`}
                                     alt={item.path}/>
                                 <h3 className='pt-4 lg:text-h3Desktop sm:text-h3Tablet text-h3Mobile text-arcadia'>{item.title}</h3>
                                 <p className='text-cardTablet text-black'>{item.text}</p>
