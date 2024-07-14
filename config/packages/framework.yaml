@@ -1,5 +1,12 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
+    http_method_override: true
+    router:
+        http_method_override: true
+        trailing_slash_on_redirect: true
+        redirect:
+            scheme: https
+
     secret: '%env(APP_SECRET)%'
     csrf_protection: true
 
