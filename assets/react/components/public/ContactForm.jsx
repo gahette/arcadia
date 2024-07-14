@@ -5,7 +5,6 @@ import * as yup from 'yup';
 import InputField from './InputField';
 import TextareaField from "./TextareaField";
 import {Navigate} from "react-router-dom";
-import {usePost} from "../hooks/useFetch";
 
 const schema = yup.object().shape({
     name: yup.string().required('Name is required'),

@@ -29,6 +29,7 @@ class animalController extends AbstractController
         return $this->json($serializedAnimals);
     }
 
+
     #[Route('/api/animal/{id}/increment-consultation', name: 'increment_consultation_count', methods: ['POST'])]
     public function incrementConsultationCount(Animal $animal, EntityManagerInterface $entityManager): Response
     {

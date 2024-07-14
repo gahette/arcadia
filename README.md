@@ -50,9 +50,12 @@ Après avoir été missionné par DevSoft pour travailler sur ce projet, José s
 - Front-end : React.js 18.3.1 avec javaScript.
 - Back-end : Symfony 7 avec  php 8.3.4
 - Css : tailwindcss.
-- Base de donnée :  sur Supabase.
+- Base de donnée : Heroku.
 - Timer : toggl track ( j' ai oublié souvent de l'actionner ou de le stopper donc le temps passé est surtout au mental :unamused: )
-- pour le déploiement : <font color='red'>a déinir (peut-être Vercel)</font>
+- pour le déploiement : Heroku avec quelques bugs lors des suppressions dans la base de donnée (problème qui n'existe pas en local)
+où je ne me suis pas attardé pour trouver d'où vient le problème par manque de temps avant la remise du compte rendu.
+
+ voici le site : ```https://zoo-arcadia35-667e89809e07.herokuapp.com/```
 
 ### <span style="color: purple">Pour l'installation sur votre environnement en local</span>
 
@@ -579,13 +582,13 @@ foreign key (animal_id) references animal (id)
 
 - ### <span style="color: purple">Gestion des fichiers images</span>
 
-#### mise en place VichUploader pour gérer les fichiers ici les images
+#### Mise en place VichUploader pour gérer les fichiers ici les images
 
-j'ai commencé par charger le bundle Symfony:
+J'ai commencé par charger le bundle Symfony:
 
 ```composer require vich/uploader-bundle```
 
-et j'ai paramétré le config/packages/vich_uploader.yaml nouvellement installé comme suit:
+et j'ai paramétré le config/packages/vich_uploader.yaml nouvellement installé comme suit :
 
 ```angular2html
 vich_uploader:
@@ -1294,4 +1297,197 @@ class ReactController extends AbstractController
 
 Et ensuite, j'ai codé le Footer.jsx.
 
-- ### <span style="color: purple">Mise en place composant HeroSection.jsx</span>
+- ### <span style="color: purple">Mise des composants de chaque page</span>
+
+#### Pour chaque section de la page d'accueil, j'ai créé un composant tel que :
+
+- - heroSection.jsx :
+
+Où j'ai utilisé ```npm i react-responsive-carousel``` pour faire défiler les images que j'ai mises en priorité 1
+
+sans oublier, sinon ça marche pas
+
+```angular2html
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+```
+
+Pour faire appelle à mes données, j'utilise un hook hooks/useFetch.jsx 
+
+```angular2html
+import { useCallback, useState } from "react";
+
+async function jsonLdFetch(url, method = "GET", data = null) {
+    const params = {
+        method: method,
+        headers: {
+            'Accept': 'application/ld+json',
+            'Content-Type': 'application/json'
+        }
+    }
+
+    if (data) {
+        params.body = JSON.stringify(data)
+    }
+    const response = await fetch(url, params)
+    if (response.status === 204) {
+        return null
+    }
+    const responseData = await response.json()
+    if (response.ok) {
+        return responseData
+    } else {
+        throw responseData
+    }
+}
+
+export function useFetch(url) {
+    const [loading, setLoading] = useState(false)
+    const [items, setItems] = useState([])
+    const [count, setCount] = useState(0)
+    const [next, setNext] = useState(null)
+    const [previous, setPrevious] = useState(null)
+
+    const load = useCallback(async () => {
+        setLoading(true)
+        try {
+            const response = await jsonLdFetch(next || url)
+
+            setItems(response || []);
+            setCount(response.length || 0);
+
+            if (response['hydra:view'] && response['hydra:view']['hydra:next']) {
+                setNext(response['hydra:view']['hydra:next'])
+            } else {
+                setNext(null)
+            }
+
+            if (response['hydra:view'] && response['hydra:view']['hydra:previous']) {
+                setPrevious(response['hydra:view']['hydra:previous'])
+            } else {
+                setPrevious(null)
+            }
+
+        } catch (error) {
+        } finally {
+            setLoading(false);
+        }
+    }, [next, url]);
+
+    return {
+        items, load, count, loading, hasMore: next !== null, hasLess: previous !== null
+    }
+}
+```
+J'ai dû créer un endpoint dans le dossier src/Controller/Api/ et des Groups dans les entités pour la serialization
+
+Exemple pour l'entité Animal.php :
+
+``` #[Groups('animal:read')]``` sur chaque attribut qui doivent être appelé sans oublier ```use Symfony\Component\Serializer\Attribute\Groups;```, 
+
+De même dans Image.php pour capturer les images associées.
+
+Et un controller dans Api qui fait appelle à une fonction get tel que :
+```angular2html
+    #[Route('/api/animal', name: 'api_animal', methods: ['GET'])]
+    public function getAnimals(AnimalRepository $animalRepository, NormalizerInterface $normalizer): Response
+    {
+        $animals = $animalRepository->findAll();
+
+        $serializedAnimals = $normalizer->normalize($animals, 'json', [
+            'groups' => ['animal:read', 'image:read'],
+        ]);
+
+        return $this->json($serializedAnimals);
+    }
+```
+
+- - HeadingSection.jsx
+
+- - CardSection.jsx
+
+Pour le CardSection, je n'ai pas utilisé le hook car j'ai utilisé les elements directement dans le composant et mapper dessus,
+
+```angular2html
+const legendary =
+    [
+        {title: 'Habitats', text: 'Se connecter au monde naturel', path: 'elephants.jpg', id: '/habitat'},
+        {title: 'Nos animaux', text: 'En savoir plus sur nos animaux', path: 'lions.jpg', id: '/animal'},
+        {title: 'Nos services', text: 'En savoir plus sur nos services', path: 'train.jpg', id: '/service'},
+    ];
+```
+
+-- TestimonialSection.jsx
+
+Pour TestimonialSection.jsx, j'ai créé 2 sous-composant pour séparer 
+la mise en forme et le formulaire d'avis que doivent remplir les visiteurs s'ils le souhaitent.
+
+Avec :
+
+Testimonial.jsx qui permet l'affichage des avis seulement s'ils ont été validé. mettre en place le endpoint testimonialController.php dans Api.
+
+TestimonialForm.jsx pour remplir un formulaire de rédaction des avis par les visiteurs. Mettre en place la route dans App.jsx.
+
+Pour les formulaires, j'ai fait appel ```npm install react-hook-form```, ```npm install @hookform/resolvers yup```
+
+Et j'ai suivi la documentation ```https://react-hook-form.com```
+
+#### Pour les autres pages 
+
+J'ai utilisé le hook et créé les endpoints suivant le besoin des appels
+
+Pour les pages Animal.jsx et Habitat.jsx, j'ai créé des liens qui renvoi aux pages de "détails" de chaque élément cliqué.
+J'ai ajouté aussi les routes dans App.jsx.
+
+- Dans AnimalSection.jsx j'utilise 
+
+```angular2html
+    const incrementConsultationCount = async (id) => {
+        try {
+            const response = await fetch(`/api/animal/${id}/increment-consultation`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to increment consultation count');
+            }
+
+            console.log('Consultation count incremented successfully');
+        } catch (error) {
+            console.error('Error incrementing consultation count:', error);
+        }
+    };
+```
+et dans le endpoint de animalController.php, j'ai ajouté 
+
+```angular2html
+    #[Route('/api/animal/{id}/increment-consultation', name: 'increment_consultation_count', methods: ['POST'])]
+    public function incrementConsultationCount(Animal $animal, EntityManagerInterface $entityManager): Response
+    {
+        $animal->setConsultationCount($animal->getConsultationCount() + 1);
+        $entityManager->persist($animal);
+        $entityManager->flush();
+
+        return new JsonResponse(['status' => 'success'], JsonResponse::HTTP_OK);
+    }
+```
+
+Pour permettre l'incrémentation dans la base de donnée à chaque clique sur un animal de la colonne "consultation_count"
+
+- Dans ContactSection.jsx, j'ai redirigé vers le ContactForm, où j'ai repris le react-hook-form.
+
+Si vous avez réussi a me lire malgré mes fautes de tournures, de grammaires, de sens de tout, je vous dis "Bravo".
+
+J'espère que ça a pu débloquer certain(e).
+
+
+
+
+
+
+
+
+
